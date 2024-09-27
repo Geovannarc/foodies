@@ -1,0 +1,155 @@
+body {
+    background-color: #F8F6F7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.login-container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.btn-outline-primary {
+    color: #E9322C !important;
+    border-color: #E9322C !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited, .btn-outline-primary:focus, .btn.active, .btn-outline-primary.focus {
+    color: #fff !important;
+    background-color: #E9322C !important;
+    border-color: #E9322C !important;
+}
+
+.form-bio {
+    position: relative;
+    bottom: 50px;
+}
+
+.heigh-100 {
+    height: 100vh;
+}
+
+.btn-picture {
+    position: relative;
+    left: 20%;
+    bottom: 80px;
+}
+
+.smaller {
+    font-size: smaller;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.login-container img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.login-container h2 {
+    font-size: 24px;
+    color: #E9322C;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 25px;
+    padding: 10px 20px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    height: 150px;
+    border: 4px solid #cdcdcd9c;
+}
+
+.btn-primary {
+    background-color: #E9322C;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #cf2e28;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #cf2e28 !important;
+    border-color: #cf2e28 !important;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    box-shadow: 0 0 0 .2rem #cf2e28
+}
+
+.bg-red {
+    background-color: #E9322C;
+    color: white;
+}
+
+.bg-red:active, .bg-red:visited, .bg-red:hover {
+    background-color: #cf2e28 !important;
+    color: white !important;
+}
+
+.form-text {
+    text-align: right;
+    color: #E9322C;
+}
+
+.form-text a {
+    color: #E9322C;
+    text-decoration: none;
+}
+
+.form-text a:hover {
+    text-decoration: underline;
+}
+
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.register-link a {
+    color: #E9322C;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 400px;
+    margin-top: 50px;
+}
+.logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+.btn-cuisine {
+    margin: 5px;
+}
+.btn-advance {
+    width: 100%;
+    margin-top: 20px;
+}
+.choose-later {
+    text-align: center;
+    margin-top: 10px;
+}
