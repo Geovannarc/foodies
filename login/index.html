@@ -11,37 +11,39 @@
 <body class="heigh-100">
   <div class="login-container">
     <img alt="Logo da Foodies" src="../img/logo-cropped.jpg" style= "width:100%"/>
-    <form class="text-left">
+    <form id="login-form" class="text-left">
       <div class="mb-2">
         <div class="form-group">
-          <label for="email" class="smaller">Usuário</label>
+          <label for="username" class="smaller">Usuário</label>
           <div class="input-group">
             <span class="input-group-text">
               <i class="fas fa-user"></i>
             </span>
-            <input class="form-control" placeholder="Usuário" type="text"/>
+            <input id="username" class="form-control" placeholder="Usuário" type="text" required/>
           </div>
         </div>
       </div>
       <div class="mb-2">
         <div class="form-group">
-          <label for="email" class="smaller">Senha</label>
+          <label for="password" class="smaller">Senha</label>
           <div class="input-group">
             <span class="input-group-text">
               <i class="fas fa-lock"></i>
             </span>
-            <input class="form-control" placeholder="********" type="password"/>
+            <input id="password" class="form-control" placeholder="********" type="password" required/>
           </div>
         </div>
         <div class="form-text">
           <a href="#">Esqueceu a senha?</a>
         </div>
       </div>
+      <div id="error-message" class="text-danger mb-2" style="display: none;"></div> <!-- Div para exibir mensagens de erro -->
       <button class="btn btn-primary" type="submit">Entrar</button>
     </form>
     <div class="register-link">
       Não tem uma conta? <a href="#">Cadastre-se</a>
     </div>
   </div>
+  <script type="text/javascript" src="login.js"></script>
 </body>
 </html>
