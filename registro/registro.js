@@ -18,7 +18,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     const data = {
         email: email,
         username: username,
-        dataNascimento: dataNascimento,
+        birthDate: dataNascimento,
         passwordHash: senha
     };
 

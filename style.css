@@ -6,22 +6,20 @@ body {
     margin: 0;
 }
 
-.login-container {
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-}
 
 .btn-outline-primary {
-    color: #E9322C !important;
-    border-color: #E9322C !important;
+    color: #34d898 !important;
+    border-color: #34d898 !important;
+}
+
+.heigh-100 {
+    height: 100vh;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited, .btn-outline-primary:focus, .btn.active, .btn-outline-primary.focus {
     color: #fff !important;
-    background-color: #E9322C !important;
-    border-color: #E9322C !important;
+    background-color: #34d898 !important;
+    border-color: #34d898 !important;
 }
 
 .form-bio {
@@ -29,14 +27,28 @@ body {
     bottom: 50px;
 }
 
-.heigh-100 {
-    height: 100vh;
+
+.bg-login {
+    background: rgb(67,215,150);
+    background: linear-gradient(90deg, rgba(67,215,150,1) 0%, rgba(21,213,174,1) 100%);
+}
+
+.title-white {
+    color: white;
+    text-shadow: 1px 2px 1px #0000007d;
+}
+
+.title-green {
+    color: #33a372;
+    text-shadow: 1px 1px 1px #0000003b;
 }
 
 .btn-picture {
     position: relative;
-    left: 20%;
-    bottom: 80px;
+    left: 60%;
+    background-color: white;
+    border: 3px solid #34d898;
+    border-radius: 40%;
 }
 
 .smaller {
@@ -49,12 +61,11 @@ body {
 
 .login-container img {
     width: 150px;
-    margin-bottom: 20px;
 }
 
 .login-container h2 {
     font-size: 24px;
-    color: #E9322C;
+    color: #34d898;
     margin-bottom: 20px;
 }
 
@@ -70,49 +81,36 @@ body {
 .profile-pic {
     border-radius: 50%;
     height: 150px;
-    border: 4px solid #cdcdcd9c;
+    border: 6px solid #43d796;
 }
 
 .btn-primary {
-    background-color: #E9322C;
+    background-color: #1cce89;
     border: none;
     border-radius: 25px;
     padding: 10px 20px;
-    width: 100%;
+    box-shadow: 0px 3px 0px 0px #4c4c4ca3;
     margin-top: 10px;
 }
 
-.btn-primary:hover {
-    background-color: #cf2e28;
-}
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #cf2e28 !important;
-    border-color: #cf2e28 !important;
+.btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-primary:focus-visible {
+    background-color: #07b371 !important;
+    box-shadow: 0px 3px 0px 0px #3e3e3ea3;
 }
 
 .btn-primary:focus,
 .btn-primary.focus {
-    box-shadow: 0 0 0 .2rem #cf2e28
-}
-
-.bg-red {
-    background-color: #E9322C;
-    color: white;
-}
-
-.bg-red:active, .bg-red:visited, .bg-red:hover {
-    background-color: #cf2e28 !important;
-    color: white !important;
+    box-shadow: 0 0 0 .2rem #34d898
 }
 
 .form-text {
     text-align: right;
-    color: #E9322C;
+    color: #34d898;
 }
 
 .form-text a {
-    color: #E9322C;
+    color: #34d898;
     text-decoration: none;
 }
 
@@ -120,13 +118,21 @@ body {
     text-decoration: underline;
 }
 
+.w-100{
+    width: 100%;
+}
+
 .register-link {
     margin-top: 20px;
     text-align: center;
 }
 
-.register-link a {
-    color: #E9322C;
+.color-white {
+    color: white !important;
+}
+
+.color-black {
+    color: black !important;
 }
 
 .register-link a:hover {
@@ -148,8 +154,4 @@ body {
 .btn-advance {
     width: 100%;
     margin-top: 20px;
-}
-.choose-later {
-    text-align: center;
-    margin-top: 10px;
 }
