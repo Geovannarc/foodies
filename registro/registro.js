@@ -23,7 +23,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     };
 
     try {
-        const response = await fetch('http://localhost:8080/register', {
+        const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

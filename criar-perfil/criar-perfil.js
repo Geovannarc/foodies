@@ -6,7 +6,7 @@ fileInput.addEventListener('change', function(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            profilePic.src = e.target.result;  // Mostra a imagem na interface
+            profilePic.src = e.target.result;
         }
         reader.readAsDataURL(file);
         

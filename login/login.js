@@ -14,7 +14,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
     errorMessageDiv.textContent = '';
 
     try {
-      const response = await fetch('http://3.140.81.94:8080/login', {
+      const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
