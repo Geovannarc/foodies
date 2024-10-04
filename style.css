@@ -59,8 +59,8 @@ body {
     text-align: left;
 }
 
-.login-container img {
-    width: 150px;
+.login-container {
+    text-align: center;
 }
 
 .login-container h2 {
@@ -80,7 +80,8 @@ body {
 
 .profile-pic {
     border-radius: 50%;
-    height: 150px;
+    width: 50%;
+    height: 170px;
     border: 6px solid #43d796;
 }
 
@@ -144,9 +145,12 @@ body {
     margin-top: 50px;
 }
 .logo {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 20px;
+    width: 50%;
+    height: 100%;
+}
+.logo-small {
+    width: 30%;
+    height: 100%;
 }
 .btn-cuisine {
     margin: 5px;

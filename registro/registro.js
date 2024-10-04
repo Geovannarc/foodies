@@ -1,20 +1,20 @@
 document.getElementById('register-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Evita o envio do formulário padrão
-
-    // Captura os valores dos campos do formulário
+    event.preventDefault(); 
     const email = document.getElementById('email').value;
     const username = document.getElementById('username').value;
     const dataNascimento = document.getElementById('data-nascimento').value;
     const senha = document.getElementById('senha').value;
     const verificaSenha = document.getElementById('verifica-senha').value;
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.style.display = 'none';
+    errorMessageDiv.textContent = '';
 
-    // Verifica se as senhas coincidem
     if (senha !== verificaSenha) {
-        alert('As senhas não coincidem!');
+        errorMessageDiv.textContent = 'As senhas não coincidem.';
+        errorMessageDiv.style.display = 'block';
         return;
     }
 
-    // Monta o payload para envio
     const data = {
         email: email,
         username: username,
@@ -38,9 +38,13 @@ document.getElementById('register-form').addEventListener('submit', async functi
             window.location.href = '../criar-perfil/index.html';
         } else {
             const errorData = await response.json();
-            alert('Erro ao registrar: ' + errorData.message);
+            if (response.status === 400) {
+                errorMessageDiv.textContent = 'Erro ao registrar. Tente novamente.';
+                errorMessageDiv.style.display = 'block';
+            }
         }
     } catch (error) {
-        alert('Ocorreu um erro ao registrar: ' + error.message);
+        errorMessageDiv.textContent = 'Erro ao registrar. Tente novamente.';
+        errorMessageDiv.style.display = 'block';
     }
 });
