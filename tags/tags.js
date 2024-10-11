@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const cuisineCheckboxesContainer = document.getElementById('cuisineCheckboxesContainer');
 
     try {
-        const response = await fetch('http://localhost:8080/tag/listAll');
+        const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/tag/listAll');
         if (!response.ok) {
             throw new Error('Erro ao buscar tags');
         }
@@ -62,12 +62,11 @@ saveButton.addEventListener('click', async function (event) {
             const jwtToken = localStorage.getItem('jwtToken');
             const username = localStorage.getItem('username');
         
-            const saveResponse = await fetch(`http://localhost:8080/tag/save?username=${encodeURIComponent(username)}`, {
+            const saveResponse = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/tag/save?username=${encodeURIComponent(username)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': jwtToken,
-                    'Origin': false
+                    'Authorization': jwtToken
                 },
                 body: JSON.stringify(tagIds)
             });
