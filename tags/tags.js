@@ -62,7 +62,7 @@ saveButton.addEventListener('click', async function (event) {
             const jwtToken = localStorage.getItem('jwtToken');
             const username = localStorage.getItem('username');
         
-            const saveResponse = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/tag/save?username=${encodeURIComponent(username)}`, {
+            const saveResponse = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/tag/add-user-tag?username=${encodeURIComponent(username)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
