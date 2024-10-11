@@ -16,10 +16,20 @@ body {
     height: 100vh;
 }
 
-.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited, .btn-outline-primary:focus, .btn.active, .btn-outline-primary.focus {
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited, .btn.active {
     color: #fff !important;
     background-color: #34d898 !important;
     border-color: #34d898 !important;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary:focus-visible {
+    box-shadow: 0 0 0 .1rem #34d898;
+    background-color: #fff;
+    color: #34d898;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 .form-bio {
@@ -100,8 +110,7 @@ body {
     box-shadow: 0px 3px 0px 0px #3e3e3ea3;
 }
 
-.btn-primary:focus,
-.btn-primary.focus {
+.btn-primary:focus {
     box-shadow: 0 0 0 .2rem #34d898
 }
 

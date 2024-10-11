@@ -39,8 +39,11 @@ const fileInput = document.getElementById('file-input');
       })
       .then(response => response.json())
       .then(data => {
-          console.log(data);
-          alert('Perfil criado com sucesso!');
+          if(response.ok) {
+              window.location.href = '../tags/index.html';
+          } else {
+              alert('Ocorreu um erro ao criar o perfil.');
+          }
       })
       .catch(error => {
           console.error('Erro:', error);
