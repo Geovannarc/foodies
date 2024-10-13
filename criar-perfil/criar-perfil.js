@@ -11,7 +11,7 @@ const fileInput = document.getElementById('file-input');
         reader.readAsDataURL(file);
       }
     });
-    document.querySelector('form').addEventListener('submit', function(event) {
+    document.querySelector('form').addEventListener('submit', async function(event) {
       event.preventDefault(); 
   
       const nome = document.getElementById('nome').value;
@@ -30,7 +30,7 @@ const fileInput = document.getElementById('file-input');
       formData.append('imageURL', ''); 
       formData.append('username', localStorage.getItem('username')); 
 
-      fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/create-profile', {
+      const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/create-profile', {
           method: 'POST',
           body: formData,
           headers: {
