@@ -41,7 +41,7 @@ const fileInput = document.getElementById('file-input');
       .then(response => response.json())
       .then(data => {
           if(response.ok) {
-              window.location.href = '../tags/index.html';
+              window.location.href = '../tags/';
           } else {
               alert('Ocorreu um erro ao criar o perfil.');
           }

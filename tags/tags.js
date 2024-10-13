@@ -50,9 +50,6 @@ const saveButton = document.querySelector('.btn-advance');
 saveButton.addEventListener('click', async function (event) {
     event.preventDefault()
     const selectedTags = Array.from(cuisineCheckboxesContainer.querySelectorAll('input[type="checkbox"]:checked'));
-    const errorMessageDiv = document.getElementById('error-message');
-    errorMessageDiv.style.display = 'none';
-    errorMessageDiv.textContent = '';
     const tagIds = selectedTags.map(checkbox => {
         return { id: checkbox.value };
     });
@@ -74,19 +71,16 @@ saveButton.addEventListener('click', async function (event) {
             console.log('Status da resposta:', saveResponse.status);
         
             if (saveResponse.ok) {
-                window.location.href = '../destaques/index.html';
+                window.location.href = '../destaques/';
             } else {
-                errorMessageDiv.textContent = 'Ocorreu um erro ao salvar as tags. Tente novamente.';
+                showError('Ocorreu um erro ao salvar as tags. Tente novamente.');
             }
-            errorMessageDiv.style.display = 'block';
         } catch (error) {
             console.error(error);
-            errorMessageDiv.style.display = 'block';
-            errorMessageDiv.textContent = 'Ocorreu um erro ao salvar as tags. Tente novamente.';
+            showError('Ocorreu um erro ao salvar as tags. Tente novamente.');
         }
     } else {
-        errorMessageDiv.style.display = 'block';
-        errorMessageDiv.textContent = 'Por favor, selecione ao menos uma tag';
+        showError('Por favor, selecione ao menos uma tag');
     }
 });
 
