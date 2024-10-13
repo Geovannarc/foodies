@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+   Cadastro - Foodies
+  </title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="style.css" rel="stylesheet"/> 
+ </head>
+ <body>
+  <div class="login-container">
+    <img src="img/logo_verde.png" alt="Foodies Logo" class="logo"/>
+    <h1 class="text-center title-green mt-4">Cadastro</h1>
+   <form id="register-form" class="text-left">
+    <div class="form-group">
+        <label for="email" class="smaller">E-mail</label>
+        <div class="mb-2">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <input id="email" class="form-control" placeholder="name@example.com" type="email"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email" class="smaller">Username</label>
+        <div class="mb-2">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-user"></i>
+              </span>
+              
+              <input id="username" class="form-control" placeholder="Username" type="text"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="data-nascimento" class="smaller">Data de nascimento</label>
+        <div class="mb-2">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-calendar"></i>
+              </span>
+              
+              <input id="data-nascimento" class="form-control" type="date"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="senha" class="smaller">Senha</label>
+        <div class="mb-2">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-lock"></i>
+              </span>
+              
+              <input id="senha" class="form-control" placeholder="********" type="password"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="verifica-senha" class="smaller">Confirme sua senha</label>
+        <div class="mb-2">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-lock"></i>
+              </span>
+            
+              <input id="verifica-senha" class="form-control" placeholder="********" type="password"/>
+            </div>
+        </div>
+    </div>
+    <div id="error-message" class="text-danger mb-2" style="display: none;"></div>
+    <button class="btn btn-primary w-100" type="submit">
+     Criar
+    </button>
+   </form>
+   <div class="register-link">
+    <p>
+     Já tem uma conta?
+     <a href="../login/index.html" class="color-black">
+      Login
+     </a>
+    </p>
+   </div>
+  </div>
+  <script type="text/javascript" src="/registro/registro.js"></script>
+ </body>
+</html>

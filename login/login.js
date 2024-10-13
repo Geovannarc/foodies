@@ -26,7 +26,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         const result = await response.json();
         const token = result.token;
 
-        localStorage.setItem('jwtToken', token);
+        localStorage.setItem(`jwtToken`, token);
         localStorage.setItem('username', username);
 
         window.location.href = '../destaques/index.html';

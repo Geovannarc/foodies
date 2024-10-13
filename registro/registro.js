@@ -18,7 +18,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     const data = {
         email: email,
         username: username,
-        birthDate: dataNascimento,
+        dateBirth: dataNascimento,
         passwordHash: senha
     };
 
@@ -34,7 +34,8 @@ document.getElementById('register-form').addEventListener('submit', async functi
         if (response.ok) {
             const result = await response.json();
             console.log(result);
-            localStorage.setItem('jwtToken', result.token);
+            localStorage.setItem('username', username);
+            localStorage.setItem(`jwtToken`, result.token);
             window.location.href = '../criar-perfil/index.html';
         } else {
             const errorData = await response.json();

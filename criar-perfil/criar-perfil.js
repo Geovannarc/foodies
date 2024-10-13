@@ -29,12 +29,13 @@ const fileInput = document.getElementById('file-input');
       formData.append('image', fileInput.files[0]); 
       formData.append('imageURL', ''); 
       formData.append('username', localStorage.getItem('username')); 
+      const username = localStorage.getItem('username');
 
       const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/create-profile', {
           method: 'POST',
           body: formData,
           headers: {
-              "Authorization": localStorage.getItem('jwtToken')
+              "Authorization": localStorage.getItem(`jwtToken`)
           }
       })
       .then(response => response.json())
