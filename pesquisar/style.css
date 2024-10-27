@@ -1,0 +1,152 @@
+.container {
+    max-width: 600px;
+}
+
+.search-container {
+    background-color: #f5f5f5;
+    border-radius: 25px;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-nav {
+    margin-top: 1rem;
+}
+
+.top-nav button {
+    border: none;
+    background: none;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.search-container input {
+    border: none;
+    background: none;
+    width: 100%;
+    font-size: 1rem;
+    color: #666;
+    outline: none;
+}
+
+.search-icon {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.results-section {
+    margin: 1.5rem 0;
+}
+
+.section-title {
+    margin: 1rem;
+    color: #666;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.section-title .count {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.restaurant-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-2px);
+}
+
+.restaurant-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #40D9A1;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.restaurant-name {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.users-list {
+    padding: 0 1rem;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.user-card:hover {
+    background-color: #f9f9f9;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #6B89D6;
+    border-radius: 50%;
+}
+
+.user-info {
+    flex-grow: 1;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.2rem;
+}
+
+.user-stats {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.loading-more {
+    text-align: center;
+    padding: 1rem;
+    color: #666;
+    font-style: italic;
+}
+
+@keyframes loading {
+    0% { opacity: 0.6; }
+    50% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+}
+
+.skeleton {
+    animation: loading 1.5s infinite;
+}
+
+.mb-3rem {
+    margin-bottom: 3rem;
+}

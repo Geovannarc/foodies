@@ -1,4 +1,4 @@
-body {
+.body-flex {
     background-color: #F8F6F7;
     display: flex;
     justify-content: center;
@@ -35,6 +35,9 @@ body {
 .form-bio {
     position: relative;
     bottom: 50px;
+}
+.mb-50{
+    margin-bottom: 50px;
 }
 
 
@@ -149,7 +152,7 @@ body {
     text-decoration: underline;
 }
 
-.container {
+.container-min {
     max-width: 400px;
     margin-top: 50px;
 }
@@ -167,4 +170,18 @@ body {
 .btn-advance {
     width: 100%;
     margin-top: 20px;
+}
+.nav-tabs {
+    justify-content: center;
+}
+.navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e7e7e7;
+}
+.navbar-nav {
+    width: 100%;
+    justify-content: space-around;
 }

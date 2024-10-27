@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Restaurante</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="../style.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+    <form id="restaurant-review-form">
+        <nav class="top-nav">
+            <button type="button" class="f-600" onclick="back()">Voltar</button>
+            <button type="submit" class="f-600">Publicar</button>
+        </nav>
+        <div class="container">
+            <div class="restaurant-image-container">
+                <div class="restaurant-image-preview">
+                    Clique para adicionar uma imagem
+                </div>
+                <label class="image-upload-label">
+                    <input type="file" id="restaurant-image" accept="image/*" name="restaurant-image">
+                </label>
+            </div>
+            <h1 class="section-title restaurant-name" id="restaurant-name">
+                
+            </h1>
+            <input type="hidden" id="restaurant-id" name="restaurant-id">
+            <div class="stars">
+                <input type="radio" name="rating" value="1" id="star1" class="star-rating">
+                <label for="star1" class="star-label">★</label>
+                <input type="radio" name="rating" value="2" id="star2" class="star-rating">
+                <label for="star2" class="star-label">★</label>
+                <input type="radio" name="rating" value="3" id="star3" class="star-rating">
+                <label for="star3" class="star-label">★</label>
+                <input type="radio" name="rating" value="4" id="star4" class="star-rating">
+                <label for="star4" class="star-label">★</label>
+                <input type="radio" name="rating" value="5" id="star5" class="star-rating">
+                <label for="star5" class="star-label">★</label>
+                
+            </div>
+
+            <h3 class="section-title">Categorias</h3>
+
+            <div class="tags-container">
+                <input type="checkbox" id="confortavel" class="tag-checkbox" name="characteristics" value="confortavel">
+                <label for="confortavel" class="tag-label green">Confortável +</label>
+
+                <input type="checkbox" id="encontros" class="tag-checkbox" name="characteristics" value="encontros">
+                <label for="encontros" class="tag-label green">Ótimo para encontros +</label>
+
+                <input type="checkbox" id="rapido" class="tag-checkbox" name="characteristics" value="rapido">
+                <label for="rapido" class="tag-label green">Atendimento rápido +</label>
+
+                <input type="checkbox" id="familia" class="tag-checkbox" name="characteristics" value="familia">
+                <label for="familia" class="tag-label green">Ótimo para família +</label>
+
+                <input type="checkbox" id="localizado" class="tag-checkbox" name="characteristics" value="localizado">
+                <label for="localizado" class="tag-label green">Bem localizado +</label>
+
+                <input type="checkbox" id="amigos" class="tag-checkbox" name="characteristics" value="amigos">
+                <label for="amigos" class="tag-label green">Ótimo para amigos +</label>
+            </div>
+
+            <textarea name="review" class="review-input" placeholder="Conte como foi sua experiência..." required></textarea>
+        </div>
+    </form>
+    <div id="nav"></div>
+    <script type="text/javascript" src="js.js"></script>
+    <script type="text/javascript" src="../nav.js"></script>
+</body>
+</html>

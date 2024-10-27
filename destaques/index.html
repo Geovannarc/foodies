@@ -1,254 +1,318 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foodies - Destaques</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style src="../style.css"></style>
+    <title>Feed de Posts</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="../style.css" rel="stylesheet"/>
     <style>
-        .carousel-item img {
-            height: 200px;
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #6B89D6;
+            margin-right: 12px;
+        }
+
+        .user-info {
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .post-time {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .post-image {
+            width: 100%;
+            aspect-ratio: 1;
             object-fit: cover;
+            background-color: #f0f0f0;
         }
 
-        .carousel-caption {
-            position: static;
+        .post-content {
+            padding: 16px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            color: #ffd700;
+            margin-right: 8px;
+        }
+
+        .restaurant-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .post-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .post-actions {
+            display: flex;
+            padding: 8px 16px;
+            border-top: 1px solid #eee;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            color: #333;
+        }
+
+        .loading {
             text-align: center;
-            padding-top: 10px;
-            color: black;
+            padding: 20px;
+            color: #666;
         }
 
-        .carousel-item {
-            transition: transform 0.5s ease-in-out;
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 8px;
         }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background-color: #fee;
+            color: #c00;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="header text-center mt-5">
-            <h1 class="h4 mb-0">Destaques | <span class="text-muted">Seguindo</span></h1>
-        </div>
-        <div class="destaques">
-            <h2 class="h5 mb-3 mt-5">Destaques da semana</h2>
-            <div id="customCarousel" class="carousel slide" data-bs-wrap="true">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../img/restaurante1.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 1</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante2.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 2</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante3.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 3</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../img/restaurante4.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 4</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante5.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 5</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante3.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 6</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
-            </div>
-        </div>
-        <div class="destaques">
-            <h2 class="h5 mb-3 mt-5">Mais bem avaliados</h2>
-            <div id="customCarousel2" class="carousel slide" data-bs-wrap="true">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../img/restaurante1.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 1</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante2.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 2</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante3.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 3</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../img/restaurante4.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 4</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante5.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 5</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante3.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 6</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel2" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#customCarousel2" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
-            </div>
-        </div>
-        <div class="destaques">
-            <h2 class="h5 mb-3 mt-5">Favoritos dos foodies</h2>
-            <div id="customCarousel3" class="carousel slide" data-bs-wrap="true">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../img/restaurante1.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 1</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante2.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 2</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante3.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 3</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../img/restaurante4.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 4</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante5.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 5</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img src="../img/restaurante3.jpg" class="d-block w-100" alt="...">
-                                <div class="carousel-caption">
-                                    <p>Restaurante 6</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel3" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#customCarousel3" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
-            </div>
-        </div>
+    <div class="container" id="feed-container">
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <div id="loading" class="loading" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Carregando mais posts...</p>
+    </div>
+    <div id="nav"></div>
     <script>
-        const carousel = document.getElementById('customCarousel');
-        let currentItem = 0;
+        class FeedManager {
+            constructor() {
+                this.page = 1;
+                this.loading = false;
+                this.hasMore = true;
+                this.feedContainer = document.getElementById('feed-container');
+                this.loadingElement = document.getElementById('loading');
+                
+                this.setupInfiniteScroll();
+                this.loadPosts();
+            }
 
-        carousel.addEventListener('slide.bs.carousel', function () {
-            const items = carousel.querySelectorAll('.carousel-item');
-            const activeItem = carousel.querySelector('.carousel-item.active');
-            const activeIndex = Array.from(items).indexOf(activeItem);
+            async loadPosts() {
+                if (this.loading || !this.hasMore) return;
 
-            currentItem = (activeIndex + 1) % items.length;
-        });
+                this.loading = true;
+                this.loadingElement.style.display = 'block';
 
-        const nextButton = carousel.querySelector('.carousel-control-next');
-        const prevButton = carousel.querySelector('.carousel-control-prev');
+                try {
+                    const posts = await this.fetchPosts();
+                    
+                    if (posts.length === 0) {
+                        this.hasMore = false;
+                    } else {
+                        this.renderPosts(posts);
+                        this.page++;
+                    }
+                } catch (error) {
+                    this.showError('Erro ao carregar os posts. Por favor, tente novamente.');
+                    console.error('Error loading posts:', error);
+                } finally {
+                    this.loading = false;
+                    this.loadingElement.style.display = 'none';
+                }
+            }
 
-        nextButton.addEventListener('click', function () {
-            moveCarousel(1);
-        });
+            async fetchPosts() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const posts = Array.from({ length: 10 }, (_, i) => ({
+                            id: (this.page - 1) * 10 + i + 1,
+                            user: {
+                                name: `Usuário ${Math.floor(Math.random() * 100)}`,
+                                avatar: null
+                            },
+                            restaurant: `Restaurante ${Math.floor(Math.random() * 50)}`,
+                            rating: (Math.random() * 2 + 3).toFixed(0),
+                            description: `Uma experiência incrível no ${this.page}º lote de posts! A comida estava excepcional e o ambiente muito agradável. ${Math.random().toString(36).substring(7)}`,
+                            image: `../img/restaurante${Math.floor(Math.random() * 6)}.jpg`,
+                            time: this.getRandomTime(),
+                            likes: Math.floor(Math.random() * 100),
+                            comments: Math.floor(Math.random() * 20)
+                        }));
 
-        prevButton.addEventListener('click', function () {
-            moveCarousel(-1);
-        });
+                        resolve(this.page <= 5 ? posts : []);
+                    }, 1000);
+                });
+            }
 
-        function moveCarousel(direction) {
-            const items = carousel.querySelectorAll('.carousel-item');
-            const totalItems = items.length;
-            currentItem = (currentItem + direction + totalItems) % totalItems;
+            getRandomTime() {
+                const hours = Math.floor(Math.random() * 72);
+                if (hours < 1) return 'Agora';
+                if (hours < 24) return `${hours}h atrás`;
+                const days = Math.floor(hours / 24);
+                return `${days}d atrás`;
+            }
 
-            items.forEach(item => item.classList.remove('active'));
-            items[currentItem].classList.add('active');
+            renderStars(rating) {
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+                return `
+                    ${`<i class="fas fa-star"></i>`.repeat(fullStars)}
+                    ${hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                    ${`<i class="far fa-star"></i>`.repeat(emptyStars)}
+                `;
+            }
+
+            renderPosts(posts) {
+                const postsHTML = posts.map(post => `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="user-avatar"></div>
+                            <div class="user-info">
+                                <h2 class="user-name">${post.user.name}</h2>
+                                <span class="post-time">${post.time}</span>
+                            </div>
+                        </div>
+                        <img src=${post.image} alt="Post" class="post-image">
+                        <div class="post-content">
+                            <div class="rating">
+                                <div class="stars">${this.renderStars(parseFloat(post.rating))}</div>
+                                <span>${post.rating}</span>
+                            </div>
+                            <div class="restaurant-name">${post.restaurant}</div>
+                            <p class="post-description">${post.description}</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-button">
+                                <i class="far fa-heart"></i>
+                                <span>${post.likes}</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="far fa-comment"></i>
+                                <span>${post.comments}</span>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                if (this.page === 1) {
+                    this.feedContainer.innerHTML = postsHTML;
+                } else {
+                    this.feedContainer.insertAdjacentHTML('beforeend', postsHTML);
+                }
+            }
+
+            showError(message) {
+                const errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                errorElement.textContent = message;
+                this.feedContainer.appendChild(errorElement);
+
+                setTimeout(() => {
+                    errorElement.remove();
+                }, 3000);
+            }
+
+            setupInfiniteScroll() {
+                window.addEventListener('scroll', () => {
+                    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+                    
+                    if (scrollTop + clientHeight >= scrollHeight - 300) { 
+                        this.loadPosts();
+                    }
+                });
+            }
         }
-    </script>
-</body>
 
+        const feedManager = new FeedManager();
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.action-button')) {
+                const button = e.target.closest('.action-button');
+                const icon = button.querySelector('i');
+                
+                if (icon.classList.contains('fa-heart')) {
+                    icon.classList.toggle('fas');
+                    icon.classList.toggle('far');
+                    const countElement = button.querySelector('span');
+                    let count = parseInt(countElement.textContent);
+                    countElement.textContent = icon.classList.contains('fas') ? count + 1 : count - 1;
+                }
+            }
+        });
+    </script>
+<script type="text/javascript" src="../nav.js"></script>
+</body>
 </html>
