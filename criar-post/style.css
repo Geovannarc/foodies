@@ -7,6 +7,10 @@
     max-width: 600px;
 }
 
+.d-flex {
+    display: flex;
+}
+
 .top-nav button {
     border: none;
     background: none;
