@@ -1,10 +1,9 @@
-let contentRatings;
+let contentRatings = document.getElementById('content').getHTML();
 let contentLists;
 let listasButton = document.getElementById('listas-link');
 let avaliacoesButton = document.getElementById('avaliacoes-link');
+let container = document.getElementById('content');
 async function changeContent(type) {
-    let container = document.getElementById('content');
-    let content = '';
     if (type === 'listas') {
         try {
             let listContent;
@@ -15,10 +14,6 @@ async function changeContent(type) {
             } else {
                 listContent = contentLists;
             }
-            contentRatings = container.getHTML();
-            console.log(container.getHTML());
-            container.innerHTML = '';
-            
             container.innerHTML = listContent;
         } catch (error) {
             console.error('Erro ao buscar ou processar as tags:', error);
@@ -36,27 +31,41 @@ async function changeContent(type) {
     }
 }
 
-async function getContentLists() {
+function getContentLists() {
     try {
-        const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/profile/lists');
-        if (!response.ok) {
-            throw new Error('Erro ao buscar listas');
-        }
-        let lists = await response.json();
-        lists = lists.message;
-        for (let i = 0; i < lists.length; i++) {
-            let list = lists[i];
-            let listContent = '';
-            for (let j = 0; j < list.content.length; j++) {
-                listContent += `<div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">${list.content[j].name}</h5>
-                    <p class="card-text">${list.content[j].description}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>`;
+        //const response = await fetch('https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/profile/lists');
+        //if (!response.ok) {
+          //  throw new Error('Erro ao buscar listas');
+        //}
+        //let lists = await response.json();
+        //lists = lists.message;
+        contentRatings = container.getHTML();
+        let lists = [
+            {
+                name: 'Lista 1',
+                id: 123
+            },
+            {
+                name: 'Lista 2',
+                id: 12345
             }
+        ]
+        let listContent = `
+        <div class="lists-container">
+            <div class="lists-grid">
+                <div class="list-card add-list-card" id="addListCard">
+                    <div class="add-list-icon">+</div>
+                </div>
+        `;
+        for (let i = 0; i < lists.length; i++) {
+                listContent += `<div class="list-card">
+            <div class="list-preview">
+                <i class="far fa-sticky-note fa-3x" style="color=#07b371"></i>
+                <p>${lists[i].name}</p>
+            </div>
+            </div>`;
         }
+        listContent += '</div></div>';
         return listContent;
     } catch (error) {
         console.error('Erro ao buscar ou processar as tags:', error);
