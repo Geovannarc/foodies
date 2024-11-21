@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (id) {
         try {
-            const response = await fetch(`http://localhost:8080/establishment/findById?id=${encodeURIComponent(id)}`);
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findById?id=${encodeURIComponent(id)}`);
             if (!response.ok) {
                 throw new Error(`Erro ao buscar dados: ${response.statusText}`);
             }
