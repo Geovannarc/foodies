@@ -32,7 +32,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
             console.log(result);
             localStorage.setItem('username', username);
             localStorage.setItem(`jwtToken`, result.token);
-            localStorage.setItem(`dXNlcklk`, result.id);
+            localStorage.setItem(`dXNlcklk`, result.message.id);
             window.location.href = '../criar-perfil/';
         } else {
             const errorData = await response.json();
