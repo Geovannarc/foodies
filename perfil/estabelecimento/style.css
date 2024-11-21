@@ -1,0 +1,71 @@
+.header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-button {
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+}
+
+.nome {
+    font-size: 2em;
+    font-weight: 500;
+}
+
+.endereco {
+    font-size: 1em;
+    color: #666;
+}
+
+.stars {
+    display: flex;
+    margin-bottom: 0.5em;
+    gap: 5px;
+    padding: 16px 0 0;
+    justify-content: center;
+}
+
+.row {
+    --bs-gutter-x: 0 !important;
+}
+
+.reviews {
+    font-size: 0.8em;
+    font-weight: 400;
+}
+
+.icon {
+    font-size: 1.2em;
+    color: #40D9A1;
+    padding: 0.5em;
+}
+.star {
+    width: 1.8em;
+    height: 1.8em;
+    background: #ccc;
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    ); 
+    position: relative;
+}
+
+.star.full {
+    background: #40D9A1; 
+}
+
+.star.partial {
+    background: linear-gradient(to right, #40D9A1 60%, #ccc 60%);
+}

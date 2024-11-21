@@ -54,13 +54,13 @@ function getContentLists() {
         <div class="lists-container">
             <div class="lists-grid">
                 <div class="list-card add-list-card" id="addListCard">
-                    <div class="add-list-icon">+</div>
+                    <i class="fas fa-2x fa-plus-circle"></i>
                 </div>
         `;
         for (let i = 0; i < lists.length; i++) {
                 listContent += `<div class="list-card">
             <div class="list-preview">
-                <i class="far fa-sticky-note fa-3x" style="color=#07b371"></i>
+                <i class="far fa-2x fa-bookmark"></i>
                 <p>${lists[i].name}</p>
             </div>
             </div>`;

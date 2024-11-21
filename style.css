@@ -96,6 +96,7 @@
     width: 50%;
     height: 170px;
     border: 6px solid #43d796;
+    object-fit: cover;
 }
 
 .btn-primary {

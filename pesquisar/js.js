@@ -1,25 +1,17 @@
+let resultsContainer = document.getElementById('results-container');
 const API = {
     async searchRestaurants(term) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const restaurants = [
-                    { id: 1, name: 'Restaurante Italiano', rating: 4.5 },
-                    { id: 2, name: 'Sushi Bar', rating: 4.8 },
-                    { id: 3, name: 'Churrascaria', rating: 4.2 },
-                    { id: 4, name: 'Retaurante ABC', rating: 4.8 },
-                    { id: 5, name: 'Sushi AKDCN', rating: 4.8 },
-                    { id: 6, name: 'Bar KADJFSJ', rating: 4.2 },
-                    { id: 7, name: 'Pizzaria Italia', rating: 4.6 },
-                    { id: 8, name: 'Café Paris', rating: 4.3 },
-                    { id: 9, name: 'Hamburgueria', rating: 4.7 },
-                    { id: 10, name: 'Bar KADJFSJ', rating: 4.2 },
-                    { id: 11, name: 'Pizzaria Italia', rating: 4.6 },
-                    { id: 12, name: 'Café Paris', rating: 4.3 },
-                    { id: 13, name: 'Hamburgueria', rating: 4.7 }
-                ].filter(r => r.name.toLowerCase().includes(term.toLowerCase()));
-                resolve(restaurants);
-            }, 500);
-        });
+        try {
+            const response = await fetch(`http://localhost:8080/establishment/find?name=${encodeURIComponent(term)}`);
+            if (!response.ok) {
+                throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return Array.from(data.message); 
+        } catch (error) {
+            console.error("Erro ao buscar restaurantes:", error);
+            return []; 
+        }
     },
 
     async searchUsers(term) {
@@ -44,251 +36,217 @@ const API = {
 };
 
 class SearchManager {
-constructor() {
-    this.currentSearchTerm = '';
-    this.allRestaurants = [];
-    this.allUsers = [];
-    this.displayedRestaurants = 0;
-    this.displayedUsers = 0;
-    this.itemsPerPage = 6;
-    this.isLoadingMore = false;
-    this.showingOnlyRestaurants = false;
+    constructor() {
+        this.currentSearchTerm = '';
+        this.allRestaurants = [];
+        this.allUsers = [];
+        this.displayedRestaurants = 0;
+        this.displayedUsers = 0;
+        this.itemsPerPage = 6;
+        this.isLoadingMore = false;
+        this.showingOnlyRestaurants = false;
 
-    this.setupInfiniteScroll();
-    this.setUpClickEvents();
-}
+        this.setupInfiniteScroll();
+        this.setUpClickEvents();
+        this.setupSearchInput();
+    }
 
-setupInfiniteScroll() {
-    window.addEventListener('scroll', () => {
-        if (this.isLoadingMore) return;
-        
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const documentHeight = document.documentElement.offsetHeight;
-        
-        if (scrollPosition >= documentHeight - 100) {
-            this.loadMore();
-        }
-    });
-    window.addEventListener('touchmove', () => {
-        if (this.isLoadingMore) return;
-        
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const documentHeight = document.documentElement.offsetHeight;
-        
-        if (scrollPosition >= documentHeight - 100) {
-            this.loadMore();
-        }
-    });
-}
+    setupInfiniteScroll() {
+        window.addEventListener('scroll', () => {
+            if (this.isLoadingMore) return;
+            
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const documentHeight = document.documentElement.offsetHeight;
+            
+            if (scrollPosition >= documentHeight - 100) {
+                this.loadMore();
+            }
+        });
+    }
 
-displayOnlyRestaurants = () => {
-    this.showingOnlyRestaurants = true;
-    this.showingOnlyUsers = false;
-    this.displayedRestaurants = 6;
-    this.displayedUsers = 0;
-    this.renderResults();
-}
+    setupSearchInput() {
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', (event) => {
+            this.handleSearch(event.target.value);
+        });
+    }
 
-displayOnlyUsers = () => {
-    this.showingOnlyRestaurants = false;
-    this.showingOnlyUsers = true;
-    this.displayedRestaurants = 0;
-    this.displayedUsers = 6;
-    this.renderResults();
-}
-
-async handleSearch(searchTerm) {
-    this.currentSearchTerm = searchTerm;
-    this.showingOnlyRestaurants = false;
-    this.showingOnlyUsers = false;
-    this.displayedRestaurants = 0;
-    this.displayedUsers = 0;
-    
-    try {
-        resultsContainer.innerHTML = this.showSkeletonLoading();
-        [this.allRestaurants, this.allUsers] = await Promise.all([
-            API.searchRestaurants(searchTerm),
-            API.searchUsers(searchTerm)
-        ]);
-        if (this.allRestaurants.length === 0 && this.allUsers.length === 0) {
-            resultsContainer.innerHTML = '<div class="error-message">Nenhum resultado encontrado</div>';
-            return;
-        }
+    displayOnlyRestaurants = () => {
+        this.showingOnlyRestaurants = true;
+        this.showingOnlyUsers = false;
+        this.displayedRestaurants = 6;
+        this.displayedUsers = 0;
         this.renderResults();
-    } catch (error) {
-        resultsContainer.innerHTML = `
-            <div class="error-message">
-                Ocorreu um erro ao buscar os resultados. Por favor, tente novamente.
+    }
+
+    displayOnlyUsers = () => {
+        this.showingOnlyRestaurants = false;
+        this.showingOnlyUsers = true;
+        this.displayedRestaurants = 0;
+        this.displayedUsers = 6;
+        this.renderResults();
+    }
+
+    async handleSearch(searchTerm) {
+        this.currentSearchTerm = searchTerm;
+        this.showingOnlyRestaurants = false;
+        this.showingOnlyUsers = false;
+        this.displayedRestaurants = 0;
+        this.displayedUsers = 0;
+        
+        try {
+            resultsContainer.innerHTML = this.showSkeletonLoading();
+            
+            [this.allRestaurants, this.allUsers] = await Promise.all([
+                API.searchRestaurants(searchTerm),
+                API.searchUsers(searchTerm)
+            ]);
+            
+            this.renderResults();
+        } catch (error) {
+            resultsContainer.innerHTML = `
+                <div class="error-message">
+                    Ocorreu um erro ao buscar os resultados. Por favor, tente novamente.
+                </div>
+            `;
+            console.error('Erro na busca:', error);
+        }
+    }
+
+    async loadMore() {
+        if (this.isLoadingMore) return;
+        if (!this.showingOnlyRestaurants && !this.showingOnlyUsers) return;
+        if (this.showingOnlyRestaurants) {
+            if (this.displayedRestaurants >= this.allRestaurants.length) return;
+        } else if (this.showingOnlyUsers) {
+            if (this.displayedRestaurants >= this.allRestaurants.length && this.displayedUsers >= this.allUsers.length) return;
+        }
+        this.isLoadingMore = true;
+        document.getElementById('loading-more').style.display = 'block';
+        
+        await new Promise(resolve => setTimeout(resolve, 500)); 
+        
+        if (this.showingOnlyRestaurants) {
+            this.displayedRestaurants += this.itemsPerPage;
+        } else {
+            this.displayedRestaurants += this.itemsPerPage;
+            this.displayedUsers += this.itemsPerPage;
+        }
+        
+        this.renderResults();
+        this.isLoadingMore = false;
+        document.getElementById('loading-more').style.display = 'none';
+    }
+
+    showSkeletonLoading() {
+        return `
+            <div class="results-section">
+                <div class="section-title">
+                    <span>Restaurantes</span>
+                    <span class="count skeleton">Carregando...</span>
+                </div>
+                <div class="restaurants-grid">
+                    ${Array(6).fill('').map(() => `
+                        <div class="restaurant-card">
+                            <div class="restaurant-image skeleton"></div>
+                            <div class="restaurant-name skeleton">Nome Restaurante</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="results-section">
+                <div class="section-title">
+                    <span>Usuários</span>
+                    <span class="count skeleton">Carregando...</span>
+                </div>
+                <div class="users-list">
+                    ${Array(3).fill('').map(() => `
+                        <div class="user-card">
+                            <div class="user-avatar skeleton"></div>
+                            <div class="user-info">
+                                <div class="user-name skeleton">Nome do Usuário</div>
+                                <div class="user-stats skeleton">Carregando...</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
             </div>
         `;
-        console.error('Erro na busca:', error);
     }
-}
 
-async loadMore() {
-    if (this.isLoadingMore) return;
-    if (!this.showingOnlyRestaurants && !this.showingOnlyUsers > 0) return;
-    if (this.showingOnlyRestaurants) {
-        if (this.displayedRestaurants >= this.allRestaurants.length) return;
-    } else if (this.showingOnlyUsers) {
-        if (this.displayedRestaurants >= this.allRestaurants.length && this.displayedUsers >= this.allUsers.length) return;
-    }
-    this.isLoadingMore = true;
-    document.getElementById('loading-more').style.display = 'block';
+    renderResults() {
+        const displayRestaurants = this.allRestaurants.slice(0, this.displayedRestaurants + this.itemsPerPage);
+        const displayUsers = this.showingOnlyRestaurants ? [] : this.allUsers.slice(0, this.displayedUsers + this.itemsPerPage);
     
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    if (this.showingOnlyRestaurants) {
-        this.displayedRestaurants += this.itemsPerPage;
-    } else {
-        this.displayedRestaurants += this.itemsPerPage;
-        this.displayedUsers += this.itemsPerPage;
-    }
-    
-    this.renderResults();
-    this.isLoadingMore = false;
-    document.getElementById('loading-more').style.display = 'none';
-}
-
-showSkeletonLoading() {
-    return `
-        <div class="results-section">
-            <div class="section-title">
-                <span>Restaurantes</span>
-                <span class="count skeleton">Carregando...</span>
-            </div>
-            <div class="restaurants-grid">
-                ${Array(6).fill('').map(() => `
-                    <div class="restaurant-card">
-                        <div class="restaurant-image skeleton"></div>
-                        <div class="restaurant-name skeleton">Nome Restaurante</div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-        <div class="results-section">
-            <div class="section-title">
-                <span>Usuários</span>
-                <span class="count skeleton">Carregando...</span>
-            </div>
-            <div class="users-list">
-                ${Array(3).fill('').map(() => `
-                    <div class="user-card">
-                        <div class="user-avatar skeleton"></div>
-                        <div class="user-info">
-                            <div class="user-name skeleton">Nome do Usuário</div>
-                            <div class="user-stats skeleton">Carregando...</div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-setUpClickEvents() {
-    let onlyRestaurants = document.getElementById("onlyRestaurants");
-    if (onlyRestaurants) {
-        onlyRestaurants.addEventListener("click", this.displayOnlyRestaurants);
-    }
-    let onlyUsers = document.getElementById("onlyUsers");
-    if (onlyUsers) {
-        onlyUsers.addEventListener("click", this.displayOnlyUsers);
-    }
-}
-
-renderResults() {
-    const displayRestaurants = this.showingOnlyUsers ? [] : this.allRestaurants.slice(0, this.displayedRestaurants + this.itemsPerPage);
-    const displayUsers = this.showingOnlyRestaurants ? [] : this.allUsers.slice(0, this.displayedUsers + this.itemsPerPage);
-
-    let html = '';
-    if (!this.showingOnlyUsers) {
+        let html = '';
         html += `
             <div class="results-section">
                 <div class="section-title">
                     <span>Restaurantes</span>
-                    <span id="onlyRestaurants" class="count">${this.allRestaurants.length} encontrados</span>
+                    <span id="onlyRestaurants" class="count" onclick="searchManager.displayOnlyRestaurants()">${this.allRestaurants.length} encontrados</span>
                 </div>
         `;
-
+    
         if (displayRestaurants.length > 0) {
-        html += `
-            <div class="restaurants-grid">
-                ${displayRestaurants.map(restaurant => `
-                    <div class="restaurant-card" data-id="${restaurant.id}">
-                        <div class="restaurant-image"></div>
-                        <div class="restaurant-name">${restaurant.name}</div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        } else {
-            html += '<div class="no-results">Nenhum restaurante encontrado</div>';
-        }
-        html += '</div>';
-    }
-
-    if (displayUsers.length > 0) {
-        html += `
-            <div class="results-section">
-                <div class="section-title">
-                    <span>Usuários</span>
-                    <span id="onlyUsers">${this.allUsers.length} encontrados</span>
-                </div>
-        `;
-
-        if (displayUsers.length > 0) {
             html += `
-                <div class="users-list">
-                    ${displayUsers.map(user => `
-                        <div class="user-card" data-id="${user.id}">
-                            <div class="user-avatar"></div>
-                            <div class="user-info">
-                                <div class="user-name">${user.name}</div>
-                                <div class="user-stats">${user.reviews} avaliações • ${user.followers} seguidores</div>
-                            </div>
+                <div class="restaurants-grid">
+                    ${displayRestaurants.map(restaurant => `
+                        <div class="restaurant-card" data-id="${restaurant.id}">
+                            <div class="restaurant-image" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${restaurant.id}'"></div>
+                            <div class="restaurant-name" onclick="window.location.href='../perfil/estabelecimento/index.htmlid=${restaurant.id}'">${restaurant.name}</div>
                         </div>
                     `).join('')}
                 </div>
             `;
         } else {
-            html += '<div class="no-results">Nenhum usuário encontrado</div>';
+            html += '<div class="no-results">Nenhum restaurante encontrado</div>';
         }
         html += '</div>';
+    
+        if (displayUsers.length > 0) {
+            html += `
+                <div class="results-section">
+                    <div class="section-title">
+                        <span>Usuários</span>
+                        <span id="onlyUsers" class="count" onclick="searchManager.displayOnlyUsers()">${this.allUsers.length} encontrados</span>
+                    </div>
+            `;
+    
+            if (displayUsers.length > 0) {
+                html += `
+                    <div class="users-list">
+                        ${displayUsers.map(user => `
+                            <div class="user-card" data-id="${user.id}">
+                                <div class="user-avatar"></div>
+                                <div class="user-info">
+                                    <div class="user-name">${user.name}</div>
+                                    <div class="user-stats">${user.reviews} avaliações • ${user.followers} seguidores</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                html += '<div class="no-results">Nenhum usuário encontrado</div>';
+            }
+            html += '</div>';
+        }
+    
+        resultsContainer.innerHTML = html;
     }
+    
+    
+    setUpClickEvents() {
+        let onlyRestaurants = document.getElementById("onlyRestaurants");
+        if (onlyRestaurants) {
+            onlyRestaurants.addEventListener("click", this.displayOnlyRestaurants);
+        }
 
-    resultsContainer.innerHTML = html;
-    this.setUpClickEvents();
-}
-
+        let onlyUsers = document.getElementById("onlyUsers");
+        if (onlyUsers) {
+            onlyUsers.addEventListener("click", this.displayOnlyUsers);
+        }
+    }
 }
 
 const searchManager = new SearchManager();
-const searchInput = document.getElementById('search-input');
-const resultsContainer = document.getElementById('results-container');
-
-let searchTimeout;
-searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value;
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => searchManager.handleSearch(searchTerm), 300);
-});
-
-searchManager.handleSearch('');
-
-resultsContainer.addEventListener('click', (e) => {
-    const restaurantCard = e.target.closest('.restaurant-card');
-    const userCard = e.target.closest('.user-card');
-
-    if (restaurantCard) {
-        const id = restaurantCard.dataset.id;
-        console.log('Restaurante clicado:', id);
-    } else if (userCard) {
-        const id = userCard.dataset.id;
-        console.log('Usuário clicado:', id);
-    }
-});
-
-function back() {
-    window.location.reload();
-}

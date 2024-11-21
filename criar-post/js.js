@@ -1,20 +1,11 @@
 const restaurantId = new URLSearchParams(window.location.search).get('id');
 
-//fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/restaurant/${restaurantId}`)
-  //  .then(response => response.json())
-    //.then(restaurant => {
-      //  document.getElementById('restaurant-name').textContent = restaurant.name;
-        //document.getElementById('restaurant-id').value = restaurant.id;
-    //});
-
-    // (MOCKADO, mudar depois)
-    // mock de um restaurante
-    const restaurant = {
-        id: 1,
-        name: 'Restaurante Teste'
-    };
-    document.getElementById('restaurant-name').textContent = restaurant.name;
-    document.getElementById('restaurant-id').value = restaurant.id;
+fetch(`http://localhost:8080/establishment/findById?id=${restaurantId}`)
+    .then(response => response.json())
+    .then(restaurant => {
+        document.getElementById('restaurant-name').textContent = restaurant.message.name;
+        document.getElementById('restaurant-id').value = restaurant.message.id;
+    });
 
 document.getElementById('restaurant-image').addEventListener('change', function(e) {
     const file = e.target.files[0];
@@ -31,20 +22,36 @@ document.getElementById('restaurant-image').addEventListener('change', function(
     }
 });
 
-document.getElementById('restaurant-review-form').addEventListener('submit', function(e) {
+document.getElementById('restaurant-review-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const formData = new FormData(this);
-    const data = {
-        restaurant_id: formData.get('restaurant-id'),
-        rating: formData.get('rating'),
-        tags: formData.getAll('characteristics'),
-        review: formData.get('review'),
-        image: formData.get('restaurant-image')
-    };
+    const formData = new FormData();
+    formData.append('restaurant-id', restaurantId);
+    formData.append('userId', parseInt(localStorage.getItem('userId')));
+    formData.append('username', localStorage.getItem('username'));
+    const ratingElement = document.querySelector('.star-rating:checked');
+    if (ratingElement) {
+        formData.append('rating', ratingElement.value);
+    } else {
+        alert('Por favor, selecione uma avaliação.');
+        return;
+    }
 
-    console.log('Dados do formulário:', data);
+    const characteristics = Array.from(document.querySelectorAll('.characteristics:checked')).map(el => el.value);
+    formData.append('characteristics', characteristics.join(','));
+
+    formData.append('review', document.getElementById('review').value);
+    formData.append('restaurant-image', document.getElementById('restaurant-image').files[0]);
+    console.log('Form data:', localStorage.getItem('username'));
+    await fetch('http://localhost:8080/post/save', {
+        method: 'POST',
+        headers: {
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: formData
+    });
     
+
 });
 
 const starLabels = document.querySelectorAll('.star-label');
