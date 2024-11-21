@@ -192,8 +192,8 @@ class SearchManager {
                 <div class="restaurants-grid">
                     ${displayRestaurants.map(restaurant => `
                         <div class="restaurant-card" data-id="${restaurant.id}">
-                            <div class="restaurant-image" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${restaurant.id}'"></div>
-                            <div class="restaurant-name" onclick="window.location.href='../perfil/estabelecimento/index.htmlid=${restaurant.id}'">${restaurant.name}</div>
+                            <div class="restaurant-image" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${encodeURIComponent(restaurant.id)}'"></div>
+                            <div class="restaurant-name" onclick="window.location.href='../perfil/estabelecimento/index.htmlid=${encodeURIComponent(restaurant.id)}'">${restaurant.name}</div>
                         </div>
                     `).join('')}
                 </div>

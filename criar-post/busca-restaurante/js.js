@@ -177,6 +177,6 @@ resultsContainer.addEventListener('click', (e) => {
     const restaurantCard = e.target.closest('.restaurant-card');
     if (restaurantCard) {
         const id = restaurantCard.dataset.id;
-        window.location.href = `../index.html?id=${id}`;
+        window.location.href = `../?id=${encodeURIComponent(id)}`;
     } 
 });

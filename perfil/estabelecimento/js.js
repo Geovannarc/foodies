@@ -45,7 +45,7 @@ function renderNumberOfRatings(containerId, numberOfRatings) {
 function redirect() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    window.location.href = `../../criar-post/index.html?id=${id}`;
+    window.location.href = `../../criar-post/index.html?id=${encodeURIComponent(id)}`;
 }
 
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (id) {
         try {
-            const response = await fetch(`http://localhost:8080/establishment/findById?id=${id}`);
+            const response = await fetch(`http://localhost:8080/establishment/findById?id=${encodeURIComponent(id)}`);
             if (!response.ok) {
                 throw new Error(`Erro ao buscar dados: ${response.statusText}`);
             }

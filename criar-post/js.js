@@ -1,6 +1,6 @@
 const restaurantId = new URLSearchParams(window.location.search).get('id');
 
-fetch(`http://localhost:8080/establishment/findById?id=${restaurantId}`)
+fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findById?id=${encodeURIComponent(restaurantId)}`)
     .then(response => response.json())
     .then(restaurant => {
         document.getElementById('restaurant-name').textContent = restaurant.message.name;
@@ -42,8 +42,7 @@ document.getElementById('restaurant-review-form').addEventListener('submit', asy
 
     formData.append('review', document.getElementById('review').value);
     formData.append('restaurant-image', document.getElementById('restaurant-image').files[0]);
-    console.log('Form data:', localStorage.getItem('username'));
-    await fetch('http://localhost:8080/post/save', {
+    await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/save?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
         method: 'POST',
         headers: {
             'Authorization': `${localStorage.getItem('token')}`
