@@ -24,6 +24,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
         localStorage.setItem(`jwtToken`, token);
         localStorage.setItem('username', username);
+        localStorage.setItem(`dXNlcklk`, result.id);
 
         window.location.href = '../destaques/index.html';
       } else {
