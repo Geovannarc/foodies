@@ -150,3 +150,20 @@
 .mb-5rem {
     margin-bottom: 5rem;
 }
+
+.filter {
+    text-align: center;
+    color: white;
+    margin-top: 1.5em;
+}
+
+.pd-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 10em;
+    text-align: center;
+    white-space: nowrap;
+}
