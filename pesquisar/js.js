@@ -34,34 +34,16 @@ const API = {
         });
     },
 
-    async filterNearMe() {
-        let latitude, longitude;
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        latitude = position.coords.latitude;
-                        longitude = position.coords.longitude;
-                        getRestaurantsByLocation(latitude, longitude);
-                    },
-                    (error) => {
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                output.textContent = "Permissão negada pelo usuário.";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                output.textContent = "Informações de localização indisponíveis.";
-                                break;
-                            case error.TIMEOUT:
-                                output.textContent = "O tempo para obter a localização expirou.";
-                                break;
-                            default:
-                                output.textContent = "Ocorreu um erro desconhecido.";
-                        }
-                    }
-                );
-            } else {
-                output.textContent = "Geolocalização não é suportada neste navegador.";
-            }
+    async getRestaurantsByLocation(latitude, longitude) {
+        fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find?latitude=${latitude}&longitude=${longitude}`)
+            .then(response => response.json())
+            .then(data => {
+                this.allRestaurants = Array.from(data.message);
+                this.displayOnlyRestaurants();
+            })
+            .catch(error => {
+                console.error('Erro ao buscar restaurantes:', error);
+            });
     }
 };
 
@@ -79,6 +61,7 @@ class SearchManager {
         this.setupInfiniteScroll();
         this.setUpClickEvents();
         this.setupSearchInput();
+        this.setupFilterNearMe();
     }
 
     setupInfiniteScroll() {
@@ -272,16 +255,34 @@ class SearchManager {
         resultsContainer.innerHTML = html;
     }
 
-    getRestaurantsByLocation(latitude, longitude) {
-        fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find?latitude=${latitude}&longitude=${longitude}`)
-            .then(response => response.json())
-            .then(data => {
-                this.allRestaurants = Array.from(data.message);
-                this.displayOnlyRestaurants();
-            })
-            .catch(error => {
-                console.error('Erro ao buscar restaurantes:', error);
-            });
+    setupFilterNearMe() {
+        let latitude, longitude;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        latitude = position.coords.latitude;
+                        longitude = position.coords.longitude;
+                        API.getRestaurantsByLocation(latitude, longitude);
+                    },
+                    (error) => {
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                output.textContent = "Permissão negada pelo usuário.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                output.textContent = "Informações de localização indisponíveis.";
+                                break;
+                            case error.TIMEOUT:
+                                output.textContent = "O tempo para obter a localização expirou.";
+                                break;
+                            default:
+                                output.textContent = "Ocorreu um erro desconhecido.";
+                        }
+                    }
+                );
+            } else {
+                output.textContent = "Geolocalização não é suportada neste navegador.";
+            }
     }
     
     
