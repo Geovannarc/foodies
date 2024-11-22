@@ -8,8 +8,8 @@
 
 
 .btn-outline-primary {
-    color: #34d898 !important;
-    border-color: #34d898 !important;
+    color: #40D9A1 !important;
+    border-color: #40D9A1 !important;
 }
 
 .heigh-100 {
@@ -18,14 +18,14 @@
 
 .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited, .btn.active {
     color: #fff !important;
-    background-color: #34d898 !important;
-    border-color: #34d898 !important;
+    background-color: #40D9A1 !important;
+    border-color: #40D9A1 !important;
 }
 
 .btn-outline-primary:focus, .btn-outline-primary:focus-visible {
-    box-shadow: 0 0 0 .1rem #34d898;
+    box-shadow: 0 0 0 .1rem #40D9A1;
     background-color: #fff;
-    color: #34d898;
+    color: #40D9A1;
 }
 
 .cursor-pointer {
@@ -60,7 +60,7 @@
     position: relative;
     left: 60%;
     background-color: white;
-    border: 3px solid #34d898;
+    border: 3px solid #40D9A1;
     border-radius: 40%;
 }
 
@@ -78,7 +78,7 @@
 
 .login-container h2 {
     font-size: 24px;
-    color: #34d898;
+    color: #40D9A1;
     margin-bottom: 20px;
 }
 
@@ -115,16 +115,16 @@
 }
 
 .btn-primary:focus {
-    box-shadow: 0 0 0 .2rem #34d898
+    box-shadow: 0 0 0 .2rem #40D9A1
 }
 
 .form-text {
     text-align: right;
-    color: #34d898;
+    color: #40D9A1;
 }
 
 .form-text a {
-    color: #34d898;
+    color: #40D9A1;
     text-decoration: none;
 }
 

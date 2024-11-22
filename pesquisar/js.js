@@ -35,15 +35,45 @@ const API = {
     },
 
     async getRestaurantsByLocation(latitude, longitude) {
-        fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find?latitude=${latitude}&longitude=${longitude}`)
-            .then(response => response.json())
-            .then(data => {
-                this.allRestaurants = Array.from(data.message);
-                this.displayOnlyRestaurants();
-            })
-            .catch(error => {
-                console.error('Erro ao buscar restaurantes:', error);
-            });
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find?latitude=${latitude}&longitude=${longitude}`)
+            if (!response.ok) {
+                throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return Array.from(data.message); 
+        } catch (error) {
+            console.error("Erro ao buscar restaurantes:", error);
+            return []; 
+        }
+    },
+
+    async filterByRating() {
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find/rating`)
+            if (!response.ok) {
+                throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return Array.from(data.message); 
+        } catch (error) {
+            console.error("Erro ao buscar restaurantes:", error);
+            return []; 
+        }
+    },
+
+    async filterByCategory(category) {
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find/category?category=${category}`)
+            if (!response.ok) {
+                throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return Array.from(data.message); 
+        } catch (error) {
+            console.error("Erro ao buscar restaurantes:", error);
+            return []; 
+        }
     }
 };
 
@@ -61,7 +91,9 @@ class SearchManager {
         this.setupInfiniteScroll();
         this.setUpClickEvents();
         this.setupSearchInput();
-        this.setupFilterNearMe();
+        this.setupNearMeFilter();
+        this.setUpRatingFilter();
+        this.setUpCategoryFilter();
     }
 
     setupInfiniteScroll() {
@@ -87,7 +119,23 @@ class SearchManager {
     setupNearMeFilter() {
         const nearMeFilter = document.getElementById('near-me-filter');
         nearMeFilter.addEventListener('click', () => {
-            this.filterNearMe();
+            this.setupFilterNearMe();
+        });
+    }
+
+    setUpRatingFilter() {
+        const ratingFilter = document.getElementById('rating-filter');
+        ratingFilter.addEventListener('click', () => {
+            this.filterByRating();
+        });
+    }
+
+    setUpCategoryFilter() {
+        const categoryFilter = document.querySelectorAll('.category-filter');
+        categoryFilter.forEach((element) => {
+            element.addEventListener('click', (event) => {
+                this.filterByCategory(event);
+            });
         });
     }
 
@@ -262,27 +310,42 @@ class SearchManager {
                     (position) => {
                         latitude = position.coords.latitude;
                         longitude = position.coords.longitude;
-                        API.getRestaurantsByLocation(latitude, longitude);
+                        const result = API.getRestaurantsByLocation(latitude, longitude);
+                        this.allRestaurants = Array.from(result);
+                        this.displayOnlyRestaurants();
                     },
                     (error) => {
                         switch (error.code) {
                             case error.PERMISSION_DENIED:
-                                output.textContent = "Permissão negada pelo usuário.";
+                                console.error("Permissão de geolocalização negada pelo usuário.");
                                 break;
                             case error.POSITION_UNAVAILABLE:
-                                output.textContent = "Informações de localização indisponíveis.";
+                                console.error("Informações de localização indisponíveis.");
                                 break;
                             case error.TIMEOUT:
-                                output.textContent = "O tempo para obter a localização expirou.";
+                                console.error("O tempo para obter a localização expirou.");
                                 break;
                             default:
-                                output.textContent = "Ocorreu um erro desconhecido.";
+                                console.error("Ocorreu um erro desconhecido.");
                         }
                     }
                 );
             } else {
                 output.textContent = "Geolocalização não é suportada neste navegador.";
             }
+    }
+
+    filterByRating() {
+        const result = API.filterByRating();
+        this.allRestaurants = result;
+        this.displayOnlyRestaurants();
+    }
+
+    filterByCategory(event) {
+        const category = event.target.id;
+        const result = API.filterByCategory(category);
+        this.allRestaurants = result;
+        this.displayOnlyRestaurants();
     }
     
     
