@@ -1,3 +1,50 @@
+const filterContainer = document.getElementById('filters');
+const content = `<div class="row">
+                <div class="col-6 filter">
+                    <button class="btn btn-primary pd-3" id="near-me-filter">
+                        <i class="fas fa-2x fa-map-marker-alt"></i>
+                        <p class="mt-1 mb-0">Perto de mim</p>
+                    </button>
+                </div>
+                <div class="col-6 filter">
+                    <button class="btn btn-primary pd-3" id="rating-filter">
+                        <i class="far fa-2x fa-star"></i>
+                        <p class="mt-1 mb-0">Bem avaliados</p>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 filter">
+                    <button class="btn btn-primary pd-3 category-filter" id="3">
+                        <i class="fas fa-2x fa-beer"></i>
+                        <p class="mt-1 mb-0">Bares</p>
+                    </button>
+                </div>
+                <div class="col-6 filter">
+                    <button class="btn btn-primary pd-3 category-filter" id="4">
+                        <i class="far fa-2x fa-heart"></i>
+                        <p class="mt-1 mb-0">Ótimo para encontros</p>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 filter">
+                    <button class="btn btn-primary pd-3 category-filter" id="5">
+                        <i class="fas fa-2x fa-seedling"></i>
+                        <p class="mt-1 mb-0">Vegetariano</p>
+                    </button>
+                </div>
+                <div class="col-6 filter">
+                    <button class="btn btn-primary pd-3 category-filter" id="6">
+                        <i class="fas fa-2x fa-ice-cream"></i>
+                        <p class="mt-1 mb-0">Doces</p>
+                    </button>
+                </div>
+            </div>`
+filterContainer.innerHTML = content;
+
+
+
 let resultsContainer = document.getElementById('results-container');
 const API = {
     async searchRestaurants(term) {
@@ -156,6 +203,13 @@ class SearchManager {
     }
 
     async handleSearch(searchTerm) {
+        if (searchTerm === '') {
+            filterContainer.innerHTML = content;
+            resultsContainer.innerHTML = '';
+            return;
+        } else {
+            filterContainer.innerHTML = '';
+        }
         this.currentSearchTerm = searchTerm;
         this.showingOnlyRestaurants = false;
         this.showingOnlyUsers = false;
@@ -172,6 +226,7 @@ class SearchManager {
             
             this.renderResults();
         } catch (error) {
+            filterContainer.innerHTML = '';
             resultsContainer.innerHTML = `
                 <div class="error-message">
                     Ocorreu um erro ao buscar os resultados. Por favor, tente novamente.
@@ -299,7 +354,6 @@ class SearchManager {
             }
             html += '</div>';
         }
-    
         resultsContainer.innerHTML = html;
     }
 
