@@ -43,7 +43,7 @@ document.getElementById('restaurant-review-form').addEventListener('submit', asy
     await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/save?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
         method: 'POST',
         headers: {
-            'Authorization': `${localStorage.getItem('token')}`
+            'Authorization': `${localStorage.getItem('jwtToken')}`
         },
         body: formData
     });
