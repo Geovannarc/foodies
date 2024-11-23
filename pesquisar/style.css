@@ -171,3 +171,7 @@
 .no-results {
     margin: 1rem;
 }
+
+#filters {
+    margin-bottom: 5em;
+}
