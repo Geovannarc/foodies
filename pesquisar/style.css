@@ -167,3 +167,7 @@
     text-wrap-mode: wrap;
     text-align: center;
 }
+
+.no-results {
+    margin: 1rem;
+}
