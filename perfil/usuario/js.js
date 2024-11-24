@@ -48,9 +48,10 @@ function renderPosts(posts) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const username = localStorage.getItem('username'); 
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('username');
     if (!username) {
-        console.error("Usuário não está logado.");
+        console.error("Erro ao buscar posts: Nome de usuário não encontrado.");
         return;
     }
 

@@ -22,7 +22,7 @@ function createNav() {
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="https://foodiesapp.com.br/perfil/meu-perfil">
+          <a class="nav-link" href="https://foodiesapp.com.br/perfil/usuario?username=${localStorage.getItem("username")}">
            <i class="fas fa-user">
            </i>
           </a>
