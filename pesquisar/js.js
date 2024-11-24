@@ -82,8 +82,14 @@ const API = {
     },
 
     async getRestaurantsByLocation(latitude, longitude) {
+        const token = localStorage.getItem('jwtToken');
         try {
-            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByGeolocation?latitude=${latitude}&longitude=${longitude}`)
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByGeolocation?latitude=${latitude}&longitude=${longitude}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `${token}`
+                }
+            });
             if (!response.ok) {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }

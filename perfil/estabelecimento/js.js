@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error(`Erro ao buscar dados: ${response.statusText}`);
             }
             const data = await response.json();
-            console.log('Dados:', data);
             document.getElementById('name').textContent = data.message.name;
             document.getElementById('address').textContent = data.message.address;
             document.getElementById('address').href = `https://www.google.com/maps/place/${encodeURIComponent(data.message.address)}`;
