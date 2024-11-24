@@ -74,3 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('ID não fornecido na URL');
     }
 });
+
+function back() {
+    window.history.back();
+}

@@ -83,12 +83,13 @@ const API = {
 
     async getRestaurantsByLocation(latitude, longitude) {
         try {
-            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find?latitude=${latitude}&longitude=${longitude}`)
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByGeolocation?latitude=${latitude}&longitude=${longitude}`)
             if (!response.ok) {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }
             const data = await response.json();
-            return Array.from(data.message); 
+            console.log(data);
+            return data.message; 
         } catch (error) {
             console.error("Erro ao buscar restaurantes:", error);
             return []; 
@@ -312,14 +313,17 @@ class SearchManager {
     
         if (displayRestaurants.length > 0) {
             html += `
-                <div class="restaurants-grid">
-                    ${displayRestaurants.map(restaurant => `
-                        <div class="restaurant-card" data-id="${restaurant.id}">
-                            <div class="restaurant-image" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${encodeURIComponent(restaurant.id)}'"></div>
-                            <div class="restaurant-name" onclick="window.location.href='../perfil/estabelecimento/index.htmlid=${encodeURIComponent(restaurant.id)}'">${restaurant.name}</div>
-                        </div>
-                    `).join('')}
-                </div>
+                    <div class="users-list">
+                        ${displayRestaurants.map(restaurant => `
+                            <div class="user-card" data-id="${restaurant.id}" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${encodeURIComponent(restaurant.id)}'">
+                                <i class="fa fa-store" style="color: #40D9A1"></i>
+                                <div class="user-info">
+                                    <div class="user-name">${restaurant.name}</div>
+                                    <div class="user-stats">${restaurant.numberRating} avaliações • ${restaurant.rating} ★</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
             `;
         } else {
             html += '<div class="no-results">Nenhum restaurante encontrado</div>';
@@ -340,7 +344,7 @@ class SearchManager {
                     <div class="users-list">
                         ${displayUsers.map(user => `
                             <div class="user-card" data-id="${user.id}">
-                                <div class="user-avatar"></div>
+                                <div class="user-avatar" style="background-image:${user.image}; background-size:contain"></div>
                                 <div class="user-info">
                                     <div class="user-name">${user.name}</div>
                                     <div class="user-stats">${user.reviews} avaliações • ${user.followers} seguidores</div>
@@ -357,15 +361,19 @@ class SearchManager {
         resultsContainer.innerHTML = html;
     }
 
-    setupFilterNearMe() {
+    async setupFilterNearMe() {
         let latitude, longitude;
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
+                    async (position) => {
                         latitude = position.coords.latitude;
                         longitude = position.coords.longitude;
-                        const result = API.getRestaurantsByLocation(latitude, longitude);
-                        this.allRestaurants = Array.from(result);
+                        const result = await API.getRestaurantsByLocation(latitude, longitude);
+                        if (result.length === 0) 
+                            resultsContainer.innerHTML = '<div class="no-results">Nenhum restaurante encontrado</div>';
+                        else 
+                            filterContainer.innerHTML = '';
+                        this.allRestaurants = result;
                         this.displayOnlyRestaurants();
                     },
                     (error) => {
