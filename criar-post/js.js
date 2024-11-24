@@ -26,7 +26,7 @@ document.getElementById('restaurant-review-form').addEventListener('submit', asy
     e.preventDefault();
     
     const formData = new FormData();
-    formData.append('restaurant-id', restaurantId);
+    formData.append('restaurantId', restaurantId);
     const ratingElement = document.querySelector('.star-rating:checked');
     if (ratingElement) {
         formData.append('rating', ratingElement.value);
