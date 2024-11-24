@@ -1,5 +1,6 @@
 const restaurantId = new URLSearchParams(window.location.search).get('id');
-
+const errorMessage = document.getElementById('error-message');
+errorMessage.style.display = 'none';
 fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findById?id=${encodeURIComponent(restaurantId)}`)
     .then(response => response.json())
     .then(restaurant => {
@@ -40,13 +41,30 @@ document.getElementById('restaurant-review-form').addEventListener('submit', asy
 
     formData.append('caption', document.getElementById('review').value);
     formData.append('mediaFile', document.getElementById('restaurant-image').files[0]);
-    await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/save?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `${localStorage.getItem('jwtToken')}`
-        },
-        body: formData
-    });
+    try {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/save?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${localStorage.getItem('jwtToken')}`
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            window.location.href = '../destaques';
+        } else {
+            const errorText = await response.text();
+            errorMessage.textContent = `Erro ao salvar a avaliação: ${errorText}`;
+            let textarea = document.getElementById('review');
+            textarea.style.marginBottom = '0'; 
+            errorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        errorMessage.textContent = `Ocorreu um erro inesperado: ${error.message}`;
+        let textarea = document.getElementById('review');
+        textarea.style.marginBottom = '0'; 
+        errorMessage.style.display = 'block';
+    }
     
 
 });

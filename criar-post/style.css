@@ -119,3 +119,7 @@
 .f-600 {
     font-weight: 600;
 }
+.error {
+    margin-bottom: 5em;
+    padding: 1em;
+}
