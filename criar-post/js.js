@@ -35,10 +35,10 @@ document.getElementById('restaurant-review-form').addEventListener('submit', asy
         return;
     }
 
-    const characteristics = Array.from(document.querySelectorAll('.characteristics:checked')).map(el => el.value);
-    formData.append('characteristics', characteristics.join(','));
+    const tags = Array.from(document.querySelectorAll('.characteristics:checked')).map(el => el.value);
+    formData.append('tags', tags.join(','));
 
-    formData.append('review', document.getElementById('review').value);
+    formData.append('caption', document.getElementById('review').value);
     formData.append('mediaFile', document.getElementById('restaurant-image').files[0]);
     await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/save?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
         method: 'POST',
