@@ -38,14 +38,14 @@ function renderFeed(posts) {
         const row = document.createElement('div');
         row.className = 'row';
 
-        posts.slice(i, i + 4).forEach(post => {
+        posts.slice(i, i + 4).forEach((post, idx) => {
             const col = document.createElement('div');
             col.className = 'col-3 fill';
             const img = document.createElement('img');
             img.className = 'w-100';
             img.style.cursor = 'pointer';
             img.src = post.mediaFile;
-            img.addEventListener('click', () => openModal(i)); 
+            img.addEventListener('click', () => openModal(i + idx)); 
             col.appendChild(img);
             row.appendChild(col);
         });
