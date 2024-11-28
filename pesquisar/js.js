@@ -62,23 +62,17 @@ const API = {
     },
 
     async searchUsers(term) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const users = [
-                    { id: 1, name: 'Ana Silva', reviews: 42, followers: 156 },
-                    { id: 2, name: 'João Santos', reviews: 28, followers: 89 },
-                    { id: 3, name: 'Maria Oliveira', reviews: 65, followers: 231 },
-                    { id: 4, name: 'Pedro Lima', reviews: 37, followers: 142 },
-                    { id: 5, name: 'Clara Rocha', reviews: 51, followers: 198 },
-                    { id: 6, name: 'Lucas Mendes', reviews: 23, followers: 76 },
-                    { id: 7, name: 'Julia Costa', reviews: 45, followers: 167 },
-                    { id: 8, name: 'Clara Rocha', reviews: 51, followers: 198 },
-                    { id: 9, name: 'Lucas Mendes', reviews: 23, followers: 76 },
-                    { id: 10, name: 'Julia Costa', reviews: 45, followers: 167 }
-                ].filter(u => u.name.toLowerCase().includes(term.toLowerCase()));
-                resolve(users);
-            }, 700);
-        });
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/getUsers?name=${encodeURIComponent(term)}`);
+            if (!response.ok) {
+                throw new Error(`Erro ao buscar usuários: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return Array.from(data.message); 
+        } catch (error) {
+            console.error("Erro ao buscar usuários:", error);
+            return []; 
+        }
     },
 
     async getRestaurantsByLocation(latitude, longitude) {
@@ -349,7 +343,7 @@ class SearchManager {
                 html += `
                     <div class="users-list">
                         ${displayUsers.map(user => `
-                            <div class="user-card" data-id="${user.id}">
+                            <div class="user-card">
                                 <div class="user-avatar" style="background-image:${user.image}; background-size:contain"></div>
                                 <div class="user-info">
                                     <div class="user-name">${user.name}</div>
