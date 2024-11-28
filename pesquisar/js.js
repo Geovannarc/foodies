@@ -347,7 +347,6 @@ class SearchManager {
                                 <div class="user-avatar" style="background-image:${user.image}; background-size:contain"></div>
                                 <div class="user-info">
                                     <div class="user-name">${user.name}</div>
-                                    <div class="user-stats">${user.reviews} avaliações • ${user.followers} seguidores</div>
                                 </div>
                             </div>
                         `).join('')}
