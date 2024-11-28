@@ -1,3 +1,4 @@
+let currentIndex = 0;
 async function fetchUserPosts(username) {
     const token = localStorage.getItem('jwtToken');
     try {
@@ -54,17 +55,17 @@ function renderFeed(posts) {
 }
 
 
-  function openModal(index) {
+function openModal(index) {
     currentIndex = index;
     updateModalContent();
     document.getElementById('post-modal').style.display = 'flex';
-  }
+}
 
-  const closeModalButton = document.getElementById('close-modal');
-  closeModalButton.addEventListener('click', () => {
+const closeModalButton = document.getElementById('close-modal');
+closeModalButton.addEventListener('click', () => {
     const modal = document.getElementById('post-modal');
     modal.style.display = 'none';
-  });
+});
 
 function updateModalContent() {
     const post = posts[currentIndex];
