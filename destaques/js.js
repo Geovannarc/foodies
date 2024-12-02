@@ -35,26 +35,22 @@ class FeedManager {
     }
 
     async fetchPosts() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const posts = Array.from({ length: 10 }, (_, i) => ({
-                    id: (this.page - 1) * 10 + i + 1,
-                    user: {
-                        name: `Usuário ${Math.floor(Math.random() * 100)}`,
-                        avatar: null
-                    },
-                    restaurant: `Restaurante ${Math.floor(Math.random() * 50)}`,
-                    rating: (Math.random() * 2 + 3).toFixed(0),
-                    description: `Uma experiência incrível no ${this.page}º lote de posts! A comida estava excepcional e o ambiente muito agradável. ${Math.random().toString(36).substring(7)}`,
-                    image: `../img/restaurante${Math.floor(Math.random() * 6)}.jpg`,
-                    time: this.getRandomTime(),
-                    likes: Math.floor(Math.random() * 100),
-                    comments: Math.floor(Math.random() * 20)
-                }));
-
-                resolve(this.page <= 5 ? posts : []);
-            }, 1000);
-        });
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/get?username=${encodeURIComponent(username)}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
+                method: 'GET',
+                 headers: {
+                     'Authorization': `${token}`
+                 }
+            });
+            if (!response.ok) {
+                 throw new Error(`Erro ao buscar posts: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return data.message;
+        } catch (error) {
+            console.error("Erro ao buscar posts:", error);
+            return []; 
+        }
     }
 
     getRandomTime() {
