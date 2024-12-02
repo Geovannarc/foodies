@@ -342,7 +342,7 @@ class SearchManager {
             if (displayUsers.length > 0) {
                 html += `
                     <div class="users-list">
-                        ${displayUsers.map(() => `
+                        ${displayUsers.map(user => `
                             <div class="user-card">
                                 <div class="user-avatar" style="background-image:${image}; background-size:contain"></div>
                                 <div class="user-info">
