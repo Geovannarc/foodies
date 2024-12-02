@@ -79,27 +79,23 @@ class FeedManager {
                 <div class="post-header">
                     <div class="user-avatar"></div>
                     <div class="user-info">
-                        <h2 class="user-name">${post.user.name}</h2>
-                        <span class="post-time">${post.time}</span>
+                        <h2 class="user-name">${post.username}</h2>
+                        <span class="post-time">${post.dateCreation}</span>
                     </div>
                 </div>
-                <img src=${post.image} alt="Post" class="post-image">
+                <img src=${post.mediaFile} alt="Post" class="post-image">
                 <div class="post-content">
                     <div class="rating">
                         <div class="stars">${this.renderStars(parseFloat(post.rating))}</div>
                         <span>${post.rating}</span>
                     </div>
-                    <div class="restaurant-name">${post.restaurant}</div>
-                    <p class="post-description">${post.description}</p>
+                    <div class="restaurant-name">${post.restaurantName}</div>
+                    <p class="post-description">${post.caption}</p>
                 </div>
                 <div class="post-actions">
                     <button class="action-button">
                         <i class="far fa-heart"></i>
                         <span>${post.likes}</span>
-                    </button>
-                    <button class="action-button">
-                        <i class="far fa-comment"></i>
-                        <span>${post.comments}</span>
                     </button>
                 </div>
             </div>
