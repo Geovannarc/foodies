@@ -342,11 +342,11 @@ class SearchManager {
             if (displayUsers.length > 0) {
                 html += `
                     <div class="users-list">
-                        ${displayUsers.map(user => `
+                        ${displayUsers.map(() => `
                             <div class="user-card">
-                                <div class="user-avatar" style="background-image:${user.image}; background-size:contain"></div>
+                                <div class="user-avatar" style="background-image:${image}; background-size:contain"></div>
                                 <div class="user-info">
-                                    <div class="user-name">${user.name}</div>
+                                    <div class="user-name">${username}</div>
                                 </div>
                             </div>
                         `).join('')}
