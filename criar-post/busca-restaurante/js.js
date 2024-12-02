@@ -123,7 +123,7 @@ renderResults() {
             html += `
                     <div class="users-list">
                         ${displayRestaurants.map(restaurant => `
-                            <div class="user-card" data-id="${restaurant.id}" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${encodeURIComponent(restaurant.id)}'">
+                            <div class="user-card" data-id="${restaurant.id}" onclick="window.location.href='../?id=${encodeURIComponent(restaurant.id)}'">
                                 <i class="fa fa-store" style="color: #40D9A1"></i>
                                 <div class="user-info">
                                     <div class="user-name">${restaurant.name}</div>
