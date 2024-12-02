@@ -343,7 +343,7 @@ class SearchManager {
                 html += `
                     <div class="users-list">
                         ${displayUsers.map(user => `
-                            <div class="user-card">
+                            <div class="user-card" onclick="window.location.href='https://foodiesapp.com.br/perfil/usuario/?username=${username}'">
                                 <div class="user-avatar" style="background-image:url('${user.image}'); background-size:contain"></div>
                                 <div class="user-info">
                                     <div class="user-name">${user.username}</div>
