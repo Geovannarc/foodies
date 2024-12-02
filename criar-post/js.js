@@ -41,6 +41,7 @@ document.getElementById('restaurant-review-form').addEventListener('submit', asy
 
     formData.append('caption', document.getElementById('review').value);
     formData.append('mediaFile', document.getElementById('restaurant-image').files[0]);
+    formData.append('restaurantName', document.getElementById('restaurant-name').textContent);
     try {
         const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/save?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
             method: 'POST',
