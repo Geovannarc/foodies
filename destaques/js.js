@@ -39,7 +39,7 @@ class FeedManager {
             const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/get?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
                 method: 'GET',
                  headers: {
-                     'Authorization': `${token}`
+                     'Authorization': `${localStorage.getItem('jwtToken')}`
                  }
             });
             if (!response.ok) {
