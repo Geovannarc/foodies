@@ -1,25 +1,16 @@
 const API = {
     async searchRestaurants(term) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const restaurants = [
-                    { id: 1, name: 'Restaurante Italiano', rating: 4.5 },
-                    { id: 2, name: 'Sushi Bar', rating: 4.8 },
-                    { id: 3, name: 'Churrascaria', rating: 4.2 },
-                    { id: 4, name: 'Retaurante ABC', rating: 4.8 },
-                    { id: 5, name: 'Sushi AKDCN', rating: 4.8 },
-                    { id: 6, name: 'Bar KADJFSJ', rating: 4.2 },
-                    { id: 7, name: 'Pizzaria Italia', rating: 4.6 },
-                    { id: 8, name: 'Café Paris', rating: 4.3 },
-                    { id: 9, name: 'Hamburgueria', rating: 4.7 },
-                    { id: 10, name: 'Bar KADJFSJ', rating: 4.2 },
-                    { id: 11, name: 'Pizzaria Italia', rating: 4.6 },
-                    { id: 12, name: 'Café Paris', rating: 4.3 },
-                    { id: 13, name: 'Hamburgueria', rating: 4.7 }
-                ].filter(r => r.name.toLowerCase().includes(term.toLowerCase()));
-                resolve(restaurants);
-            }, 500);
-        });
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find?name=${encodeURIComponent(term)}`);
+            if (!response.ok) {
+                throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return Array.from(data.message); 
+        } catch (error) {
+            console.error("Erro ao buscar restaurantes:", error);
+            return []; 
+        }
     },
 
 };
@@ -31,7 +22,7 @@ constructor() {
     this.displayedRestaurants = 0;
     this.itemsPerPage = 12;
     this.isLoadingMore = false;
-
+    this.loadingElement = document.getElementById('loading');
     this.setupInfiniteScroll();
 }
 
@@ -99,19 +90,8 @@ async loadMore() {
 
 showSkeletonLoading() {
     return `
-        <div class="results-section">
-            <div class="section-title">
-                <span>Restaurantes</span>
-                <span class="count skeleton">Carregando...</span>
-            </div>
-            <div class="restaurants-grid">
-                ${Array(12).fill('').map(() => `
-                    <div class="restaurant-card">
-                        <div class="restaurant-image skeleton"></div>
-                        <div class="restaurant-name skeleton">Nome Restaurante</div>
-                    </div>
-                `).join('')}
-            </div>
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
         </div>
     `;
 }
@@ -130,26 +110,29 @@ setUpClickEvents() {
 renderResults() {
     const displayRestaurants = this.allRestaurants.slice(0, this.displayedRestaurants + this.itemsPerPage);
 
-    let html = '';
+        let html = '';
         html += `
             <div class="results-section">
                 <div class="section-title">
                     <span>Restaurantes</span>
-                    <span id="onlyRestaurants" class="count">${this.allRestaurants.length} encontrados</span>
+                    <span id="onlyRestaurants" class="count" onclick="searchManager.displayOnlyRestaurants()">${this.allRestaurants.length} encontrados</span>
                 </div>
         `;
-
+    
         if (displayRestaurants.length > 0) {
-        html += `
-            <div class="restaurants-grid">
-                ${displayRestaurants.map(restaurant => `
-                    <div class="restaurant-card" data-id="${restaurant.id}">
-                        <div class="restaurant-image"></div>
-                        <div class="restaurant-name">${restaurant.name}</div>
+            html += `
+                    <div class="users-list">
+                        ${displayRestaurants.map(restaurant => `
+                            <div class="user-card" data-id="${restaurant.id}" onclick="window.location.href='../perfil/estabelecimento/index.html?id=${encodeURIComponent(restaurant.id)}'">
+                                <i class="fa fa-store" style="color: #40D9A1"></i>
+                                <div class="user-info">
+                                    <div class="user-name">${restaurant.name}</div>
+                                    <div class="user-stats">${restaurant.numberRating} avaliações • ${restaurant.rating} ★</div>
+                                </div>
+                            </div>
+                        `).join('')}
                     </div>
-                `).join('')}
-            </div>
-        `;
+            `;
         } else {
             html += '<div class="no-results">Nenhum restaurante encontrado</div>';
         }
@@ -171,7 +154,6 @@ searchInput.addEventListener('input', (e) => {
     searchTimeout = setTimeout(() => searchManager.handleSearch(searchTerm), 300);
 });
 
-searchManager.handleSearch('');
 
 resultsContainer.addEventListener('click', (e) => {
     const restaurantCard = e.target.closest('.restaurant-card');
