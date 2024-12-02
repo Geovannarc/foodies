@@ -19,11 +19,13 @@
 }
 
 .user-avatar {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: #6B89D6;
     margin-right: 12px;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .user-info {

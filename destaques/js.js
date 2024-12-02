@@ -1,11 +1,10 @@
 class FeedManager {
     constructor() {
-        this.page = 1;
+        this.page = null;
         this.loading = false;
         this.hasMore = true;
         this.feedContainer = document.getElementById('feed-container');
         this.loadingElement = document.getElementById('loading');
-        
         this.setupInfiniteScroll();
         this.loadPosts();
     }
@@ -19,11 +18,10 @@ class FeedManager {
         try {
             const posts = await this.fetchPosts();
             
-            if (posts.length === 0) {
+            if (posts.length <= 0) {
                 this.hasMore = false;
             } else {
                 this.renderPosts(posts);
-                this.page++;
             }
         } catch (error) {
             this.showError('Erro ao carregar os posts. Por favor, tente novamente.');
@@ -36,7 +34,7 @@ class FeedManager {
 
     async fetchPosts() {
         try {
-            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/get?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}`, {
+            const response = await fetch(`http://localhost:8080/post/get?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&exclusiveStartKey=${this.page}`, {
                 method: 'GET',
                  headers: {
                      'Authorization': `${localStorage.getItem('jwtToken')}`
@@ -46,19 +44,38 @@ class FeedManager {
                  throw new Error(`Erro ao buscar posts: ${response.statusText}`);
             }
             const data = await response.json();
-            return data.message;
+            this.page = data.message.exclusiveStartKey;
+            if (!this.page) {
+                this.hasMore = false;
+            }
+            return data.message.posts;
         } catch (error) {
             console.error("Erro ao buscar posts:", error);
             return []; 
         }
     }
 
-    getRandomTime() {
-        const hours = Math.floor(Math.random() * 72);
-        if (hours < 1) return 'Agora';
-        if (hours < 24) return `${hours}h atrás`;
-        const days = Math.floor(hours / 24);
-        return `${days}d atrás`;
+    formatRelativeTime(dateString) {
+        const date = new Date(dateString.replace(' ', 'T')); 
+        const now = new Date();
+        const diffMs = now - date; 
+        const diffMinutes = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMinutes / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        const diffWeeks = Math.floor(diffDays / 7);
+    
+        if (diffHours < 1) {
+            return "agora";
+        } else if (diffDays < 1) {
+            return `${diffHours} ${diffHours === 1 ? "hora" : "horas"} atrás`;
+        } else if (diffDays < 7) {
+            return `${diffDays} ${diffDays === 1 ? "dia" : "dias"} atrás`;
+        } else if (diffWeeks < 4) {
+            return `${diffWeeks} ${diffWeeks === 1 ? "semana" : "semanas"} atrás`;
+        } else {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('pt-BR', options);
+        }
     }
 
     renderStars(rating) {
@@ -77,10 +94,11 @@ class FeedManager {
         const postsHTML = posts.map(post => `
             <div class="post-card">
                 <div class="post-header">
-                    <div class="user-avatar"></div>
+                    <div class="user-avatar" style="background-image: url(https://profile-pic-foodies.s3.us-east-2.amazonaws.com/${post.username}.jpg);">
+                    </div>
                     <div class="user-info">
                         <h2 class="user-name">${post.username}</h2>
-                        <span class="post-time">${post.dateCreation}</span>
+                        <span class="post-time">${this.formatRelativeTime(post.dateCreation)}</span>
                     </div>
                 </div>
                 <img src=${post.mediaFile} alt="Post" class="post-image">
@@ -101,7 +119,7 @@ class FeedManager {
             </div>
         `).join('');
 
-        if (this.page === 1) {
+        if (this.page === null) {
             this.feedContainer.innerHTML = postsHTML;
         } else {
             this.feedContainer.insertAdjacentHTML('beforeend', postsHTML);
