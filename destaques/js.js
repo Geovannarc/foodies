@@ -108,7 +108,7 @@ class FeedManager {
                         <span>${post.rating}</span>
                     </div>
                     <div class="restaurant-name">${post.restaurantName}</div>
-                    <p class="post-description">${post.caption}</p>
+                    <p class="post-description"><span style="font-weight:600">@${post.username}<span> ${post.caption}</p>
                 </div>
                 <div class="post-actions">
                     <button class="action-button">
