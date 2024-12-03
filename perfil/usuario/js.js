@@ -1,4 +1,5 @@
 let currentIndex = 0;
+let id;
 async function fetchUserPosts(username) {
     const token = localStorage.getItem('jwtToken');
     try {
@@ -19,9 +20,10 @@ async function fetchUserPosts(username) {
     }
 }
 
-async function followUser(params) {
+async function followUser() {
     try {
-        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/follow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
+
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/follow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${id}`, {
             method: 'POST',
             headers: {
                 'Authorization': `${localStorage.getItem('jwtToken')}`
@@ -40,9 +42,9 @@ async function followUser(params) {
     }
 }
 
-async function unfollowUser(params) {
+async function unfollowUser() {
     try {
-        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/unfollow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/unfollow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${id}`, {
             method: 'POST',
             headers: {
                 'Authorization': `${localStorage.getItem('jwtToken')}`
@@ -147,7 +149,7 @@ closeModalButton.addEventListener('click', () => {
 function updateModalContent() {
     const post = posts[currentIndex];
     document.getElementById('modal-image').src = post.mediaFile;
-    document.getElementById('modal-caption').textContent =`<span style="font-weight:600">${post.username}</span> ${post.caption || 'Sem legenda'}`;
+    document.getElementById('modal-caption').innerHTML =`<span style="font-weight:600">${post.username}</span> ${post.caption || 'Sem legenda'}`;
     document.getElementById('modal-rating').innerHTML = renderStars(post.rating);
     document.getElementById('modal-restaurant').textContent = post.restaurantName;
     document.getElementById('modal-likes').innerHTML = `<i class="far fa-heart"></i><span> ${post.likes}</span>`;
@@ -190,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     let profile = await getProfile(username);
     renderProfile(profile);
+    id = profile.userId;
     posts = await fetchUserPosts(username);
     renderFeed(posts);
 });
