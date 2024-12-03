@@ -98,7 +98,7 @@ const API = {
 
     async filterByRating() {
         try {
-            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find/rating`)
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByRating`)
             if (!response.ok) {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }
@@ -112,7 +112,7 @@ const API = {
 
     async filterByCategory(category) {
         try {
-            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/find/category?category=${category}`)
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByCategory?category=${category}`)
             if (!response.ok) {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }
