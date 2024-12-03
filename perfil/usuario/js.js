@@ -19,6 +19,83 @@ async function fetchUserPosts(username) {
     }
 }
 
+async function followUser(params) {
+    try {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/follow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${localStorage.getItem('jwtToken')}`
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Erro ao seguir usuário: ${response.statusText}`);
+        }
+        const data = await response.json();
+        document.getElementById('follow-button').style.display = 'none';
+        document.getElementById('unfollow-button').style.display = 'block';
+        return data.message;
+    } catch (error) {
+        console.error("Erro ao seguir usuário:", error);
+        return null;
+    }
+}
+
+async function unfollowUser(params) {
+    try {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/unfollow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${localStorage.getItem('jwtToken')}`
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Erro ao deixar de seguir usuário: ${response.statusText}`);
+        }
+        const data = await response.json();
+        document.getElementById('follow-button').style.display = 'block';
+        document.getElementById('unfollow-button').style.display = 'none';
+        return data.message;
+    } catch (error) {
+        console.error("Erro ao deixar de seguir usuário:", error);
+        return null;
+    }
+}
+
+async function getProfile(params) {
+    try {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/getProfile?username=${params}`, {
+            method: 'GET'
+        });
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar usuário: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data.message;
+    } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        return null;
+    }
+}
+
+async function getIsFollowing(userId) {
+    try {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/isFollowing?username=${localStorage.getItem('username')}&following=${localStorage.getItem('dXNlcklk')}&follower=${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `${localStorage.getItem('jwtToken')}`
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar usuário: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data.message;
+    } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        return null;
+    }
+}
+
 function renderStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
@@ -78,6 +155,31 @@ function updateModalContent() {
 
 let posts = [];
 
+function renderProfile(profile) {
+    document.getElementById('profile-pic').src = profile.imageURL;
+    document.getElementById('profile-name').textContent = profile.name;
+    document.getElementById('profile-username').textContent = `@${profile.username}`;
+    document.getElementById('profile-bio').textContent = profile.bio;
+    document.getElementById('profile-followers').textContent = profile.followercount;
+    document.getElementById('profile-following').textContent = profile.followingcount;
+    document.getElementById('profile-posts').textContent = profile.postcount;
+}
+
+function renderFollowButton(profile) {
+    if (profile.username === localStorage.getItem('username')) {
+        document.getElementById('follow-button').style.display = 'none';
+        document.getElementById('unfollow-button').style.display = 'none';
+    } else {
+        if(getIsFollowing(profile.user_id)) {
+            document.getElementById('follow-button').style.display = 'none';
+            document.getElementById('unfollow-button').style.display = 'block';
+        } else {
+            document.getElementById('follow-button').style.display = 'block';
+            document.getElementById('unfollow-button').style.display = 'none';
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('username');
@@ -85,7 +187,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error("Erro ao buscar posts: Nome de usuário não encontrado.");
         return;
     }
-
+    let profile = await getProfile(username);
+    renderProfile(profile);
+    renderFollowButton(profile);
     posts = await fetchUserPosts(username);
     renderFeed(posts);
 });

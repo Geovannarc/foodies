@@ -13,25 +13,27 @@
  </head>
  <body>
   <div class="profile-header">
-   <p id="username">
+   <p id="profile-username">
     @Username
    </p>
-   <img id="profile-pic" alt="Profile picture" height="80" src="https://storage.googleapis.com/a1aa/image/3Efe6ampccr4jUtdBiggD5PJXMAOJPsRK1zNecartMx7LBNnA.jpg" width="80"/>
-   <p id="name">Nome</p>
-    <p id="bio">biografia</p>
+   <img id="profile-pic" alt="Profile picture" height="80" src="" width="80"/>
+   <p id="profile-name">Nome</p>
+    <p id="profile-bio">biografia</p>
+    <button class="btn btn-outline-primary" id="follow-button" onclick="followUser()"  style="display: none;"><i class="fa fa-plus"></i> Seguir</button>
+    <button class="btn btn-outline-primary" id="unfollow-button" onclick="unfollowUser()" style="display: none;"><i class="fa fa-plus"></i> Deixar de seguir</button>
   </div>
   <div class="profile-stats">
-   <div>
-    <span>80</span>
-    Avaliações
+   <div class="text-center">
+      <p id="profile-posts" class="header-stats">0</p>
+      <p>Avaliações</p>
    </div>
-   <div>
-    <span>200</span>
-    Seguidores
-   </div>
-   <div>
-    <span>300</span>
-    Seguindo
+   <div class="text-center">
+    <p id="profile-followers" class="header-stats"></p>
+    <p>Seguidores</p>
+    </div>
+   <div class="text-center">
+    <p id="profile-following" class="header-stats"></p>
+    <p>Seguindo</p>
    </div>
   </div>
   <ul class="nav nav-tabs">

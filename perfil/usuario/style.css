@@ -51,3 +51,8 @@
     margin: 0;
     margin-bottom: 0.5em;
 }
+
+.header-stats {
+    margin-bottom: 0.5em;
+    font-weight: 600;
+}
