@@ -21,7 +21,7 @@ async function fetchUserPosts(username) {
 
 async function followUser(params) {
     try {
-        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/follow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/follow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
             method: 'POST',
             headers: {
                 'Authorization': `${localStorage.getItem('jwtToken')}`
@@ -42,7 +42,7 @@ async function followUser(params) {
 
 async function unfollowUser(params) {
     try {
-        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/unfollow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/unfollow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${params}`, {
             method: 'POST',
             headers: {
                 'Authorization': `${localStorage.getItem('jwtToken')}`
@@ -79,7 +79,7 @@ async function getProfile(params) {
 
 async function getIsFollowing(userId) {
     try {
-        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/isFollowing?username=${localStorage.getItem('username')}&following=${localStorage.getItem('dXNlcklk')}&follower=${userId}`, {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/user/checkFollow?username=${localStorage.getItem('username')}&following=${localStorage.getItem('dXNlcklk')}&follower=${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `${localStorage.getItem('jwtToken')}`
