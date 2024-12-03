@@ -163,6 +163,7 @@ function renderProfile(profile) {
     document.getElementById('profile-followers').textContent = profile.followercount;
     document.getElementById('profile-following').textContent = profile.followingcount;
     document.getElementById('profile-posts').textContent = profile.postcount;
+    renderFollowButton(profile);
 }
 
 function renderFollowButton(profile) {
@@ -170,7 +171,7 @@ function renderFollowButton(profile) {
         document.getElementById('follow-button').style.display = 'none';
         document.getElementById('unfollow-button').style.display = 'none';
     } else {
-        if(getIsFollowing(profile.user_id)) {
+        if(getIsFollowing(profile.userId)) {
             document.getElementById('follow-button').style.display = 'none';
             document.getElementById('unfollow-button').style.display = 'block';
         } else {
@@ -189,7 +190,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     let profile = await getProfile(username);
     renderProfile(profile);
-    renderFollowButton(profile);
     posts = await fetchUserPosts(username);
     renderFeed(posts);
 });
