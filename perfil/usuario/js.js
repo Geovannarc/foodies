@@ -166,16 +166,16 @@ function renderProfile(profile) {
     renderFollowButton(profile);
 }
 
-function renderFollowButton(profile) {
+async function renderFollowButton(profile) {
     if (profile.username === localStorage.getItem('username')) {
         document.getElementById('follow-button').style.display = 'none';
         document.getElementById('unfollow-button').style.display = 'none';
     } else {
-        if(getIsFollowing(profile.userId) == "true") {
+        if(await getIsFollowing(profile.userId) == true) {
             document.getElementById('follow-button').style.display = 'none';
-            document.getElementById('unfollow-button').style.display = 'inline;';
+            document.getElementById('unfollow-button').style.display = 'inline';
         } else {
-            document.getElementById('follow-button').style.display = 'inline;';
+            document.getElementById('follow-button').style.display = 'inline';
             document.getElementById('unfollow-button').style.display = 'none';
         }
     }
