@@ -32,7 +32,7 @@ async function followUser(params) {
         }
         const data = await response.json();
         document.getElementById('follow-button').style.display = 'none';
-        document.getElementById('unfollow-button').style.display = 'block';
+        document.getElementById('unfollow-button').style.display = 'inline;';
         return data.message;
     } catch (error) {
         console.error("Erro ao seguir usuário:", error);
@@ -52,7 +52,7 @@ async function unfollowUser(params) {
             throw new Error(`Erro ao deixar de seguir usuário: ${response.statusText}`);
         }
         const data = await response.json();
-        document.getElementById('follow-button').style.display = 'block';
+        document.getElementById('follow-button').style.display = 'inline;';
         document.getElementById('unfollow-button').style.display = 'none';
         return data.message;
     } catch (error) {
@@ -147,9 +147,9 @@ closeModalButton.addEventListener('click', () => {
 function updateModalContent() {
     const post = posts[currentIndex];
     document.getElementById('modal-image').src = post.mediaFile;
-    document.getElementById('modal-caption').textContent = post.caption || 'Sem legenda';
+    document.getElementById('modal-caption').textContent =`<span style="font-weight:600">${post.username}</span> ${post.caption || 'Sem legenda'}`;
     document.getElementById('modal-rating').innerHTML = renderStars(post.rating);
-    document.getElementById('modal-restaurant').textContent = post.restaurant;
+    document.getElementById('modal-restaurant').textContent = post.restaurantName;
     document.getElementById('modal-likes').innerHTML = `<i class="far fa-heart"></i><span> ${post.likes}</span>`;
 }
 
@@ -171,11 +171,11 @@ function renderFollowButton(profile) {
         document.getElementById('follow-button').style.display = 'none';
         document.getElementById('unfollow-button').style.display = 'none';
     } else {
-        if(getIsFollowing(profile.userId)) {
+        if(getIsFollowing(profile.userId) == "true") {
             document.getElementById('follow-button').style.display = 'none';
-            document.getElementById('unfollow-button').style.display = 'block';
+            document.getElementById('unfollow-button').style.display = 'inline;';
         } else {
-            document.getElementById('follow-button').style.display = 'block';
+            document.getElementById('follow-button').style.display = 'inline;';
             document.getElementById('unfollow-button').style.display = 'none';
         }
     }
