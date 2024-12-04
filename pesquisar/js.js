@@ -97,12 +97,12 @@ const API = {
 
     async filterByRating() {
         try {
-            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByRating`)
+            const response = await fetch(`http://localhost:8080/establishment/findByRating`)
             if (!response.ok) {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }
             const data = await response.json();
-            return Array.from(data.message); 
+            return data.message; 
         } catch (error) {
             console.error("Erro ao buscar restaurantes:", error);
             return []; 
@@ -298,6 +298,7 @@ class SearchManager {
     }
 
     renderResults() {
+        console.log(this.allRestaurants);
         const displayRestaurants = this.allRestaurants.slice(0, this.displayedRestaurants + this.itemsPerPage);
         const displayUsers = this.showingOnlyRestaurants ? [] : this.allUsers.slice(0, this.displayedUsers + this.itemsPerPage);
     
@@ -396,8 +397,8 @@ class SearchManager {
             }
     }
 
-    filterByRating() {
-        const result = API.filterByRating();
+    async filterByRating() {
+        const result = await API.filterByRating();
         if (result.length === 0) 
             resultsContainer.innerHTML = '<div class="no-results">Nenhum restaurante encontrado</div>';
         else 
@@ -406,9 +407,13 @@ class SearchManager {
         this.displayOnlyRestaurants();
     }
 
-    filterByCategory(event) {
+    async filterByCategory(event) {
         const category = event.target.id;
-        const result = API.filterByCategory(category);
+        const result = await API.filterByCategory(category);
+        if (result.length === 0) 
+            resultsContainer.innerHTML = '<div class="no-results">Nenhum restaurante encontrado</div>';
+        else 
+            filterContainer.innerHTML = '';
         this.allRestaurants = result;
         this.displayOnlyRestaurants();
     }
