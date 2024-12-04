@@ -29,6 +29,13 @@
     border-radius: 10px;
 }
 
+.btn-tags:hover{
+    color: #40D9A1;
+    border: 1px solid;
+    padding: 0.6em;
+    border-radius: 10px;
+}
+
 .btn-outline-primary:focus, .btn-outline-primary:focus-visible {
     box-shadow: 0 0 0 .1rem #40D9A1;
     background-color: #fff;
