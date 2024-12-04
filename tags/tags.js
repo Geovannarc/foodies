@@ -34,7 +34,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             label.textContent = tag.name;
             label.classList.add('form-check-label', 'cursor-pointer', 'm-0');
         
-            checkboxWrapper.addEventListener('click', function () {
+            checkboxWrapper.addEventListener('click', function (event) {
+                event.preventDefault();
+        
                 checkbox.checked = !checkbox.checked;
                 this.classList.toggle('active', checkbox.checked);
             });
