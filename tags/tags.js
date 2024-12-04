@@ -36,9 +36,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         
             checkboxWrapper.addEventListener('click', function (event) {
                 event.preventDefault();
-        
                 checkbox.checked = !checkbox.checked;
                 this.classList.toggle('active', checkbox.checked);
+        
+                this.blur();
             });
         
             checkboxWrapper.appendChild(checkbox);
