@@ -27,20 +27,16 @@ document.addEventListener('DOMContentLoaded', async function () {
             checkbox.type = 'checkbox';
             checkbox.id = `tag-${tag.id}`;
             checkbox.value = tag.id;
-            checkbox.style.display = 'none';  
+            checkbox.style.display = 'none';
         
             const label = document.createElement('label');
             label.htmlFor = `tag-${tag.id}`;
             label.textContent = tag.name;
             label.classList.add('form-check-label', 'cursor-pointer', 'm-0');
         
-            // Evento de clique no wrapper
-            checkboxWrapper.addEventListener('click', function (event) {
-                // Evita que cliques duplicados ocorram
-                if (event.target === checkbox || event.target === label) {
-                    checkbox.checked = !checkbox.checked;
-                    this.classList.toggle('active');
-                }
+            checkboxWrapper.addEventListener('click', function () {
+                checkbox.checked = !checkbox.checked;
+                this.classList.toggle('active', checkbox.checked);
             });
         
             checkboxWrapper.appendChild(checkbox);
