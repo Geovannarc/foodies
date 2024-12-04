@@ -37,11 +37,13 @@
     color: #333;
     margin: 0;
     font-size: 0.95rem;
+    text-decoration: none;
 }
 
 .post-time {
     color: #666;
     font-size: 0.8rem;
+    display: block;
 }
 
 .post-image {
