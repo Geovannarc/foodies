@@ -101,7 +101,7 @@ class FeedManager {
                     </a>
                     <div class="user-info">
                         <a href="../perfil/usuario?username=${post.username}" class="user-name">
-                            <h2>${post.username}</h2>
+                            <p>${post.username}</p>
                         </a>
                         <span class="post-time">${this.formatRelativeTime(post.dateCreation)}</span>
                     </div>
