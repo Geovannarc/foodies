@@ -97,7 +97,7 @@ const API = {
 
     async filterByRating() {
         try {
-            const response = await fetch(`http://localhost:8080/establishment/findByRating`)
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/establishment/findByRating`)
             if (!response.ok) {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }
@@ -415,6 +415,7 @@ class SearchManager {
         else 
             filterContainer.innerHTML = '';
         this.allRestaurants = result;
+        console.log(this.allRestaurants);
         this.displayOnlyRestaurants();
     }
     
