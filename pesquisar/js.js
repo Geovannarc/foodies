@@ -88,7 +88,6 @@ const API = {
                 throw new Error(`Erro ao buscar restaurantes: ${response.statusText}`);
             }
             const data = await response.json();
-            console.log(data);
             return data.message; 
         } catch (error) {
             console.error("Erro ao buscar restaurantes:", error);
@@ -399,6 +398,10 @@ class SearchManager {
 
     filterByRating() {
         const result = API.filterByRating();
+        if (result.length === 0) 
+            resultsContainer.innerHTML = '<div class="no-results">Nenhum restaurante encontrado</div>';
+        else 
+            filterContainer.innerHTML = '';
         this.allRestaurants = result;
         this.displayOnlyRestaurants();
     }
