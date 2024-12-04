@@ -14,31 +14,38 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         tags.forEach(tag => {
             const checkboxWrapper = document.createElement('div');
-            checkboxWrapper.classList.add('btn', 'btn-outline-primary', 'btn-cuisine', 'mb-2', 'align-items-center', 'justify-content-center');
-
+            checkboxWrapper.classList.add(
+                'btn',
+                'btn-outline-primary',
+                'btn-cuisine',
+                'mb-2',
+                'align-items-center',
+                'justify-content-center'
+            );
+        
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `tag-${tag.id}`;
             checkbox.value = tag.id;
             checkbox.style.display = 'none';  
-
+        
             const label = document.createElement('label');
             label.htmlFor = `tag-${tag.id}`;
             label.textContent = tag.name;
             label.classList.add('form-check-label', 'cursor-pointer', 'm-0');
-            checkboxWrapper.addEventListener('click', function () {
-                checkbox.checked = !checkbox.checked; 
-                this.classList.toggle('active');  
+        
+            // Evento de clique no wrapper
+            checkboxWrapper.addEventListener('click', function (event) {
+                // Evita que cliques duplicados ocorram
+                if (event.target === checkbox || event.target === label) {
+                    checkbox.checked = !checkbox.checked;
+                    this.classList.toggle('active');
+                }
             });
-
-            label.addEventListener('click', function (event) {
-                checkbox.checked = !checkbox.checked; 
-                checkboxWrapper.classList.toggle('active');
-            });
-
+        
             checkboxWrapper.appendChild(checkbox);
             checkboxWrapper.appendChild(label);
-
+        
             cuisineCheckboxesContainer.appendChild(checkboxWrapper);
         });
 
