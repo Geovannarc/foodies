@@ -46,9 +46,9 @@ class FeedManager {
             }
             const data = await response.json();
             this.page = data.message.exclusiveStartKey;
-            console.log('Next page:', this.page);
-            if (!this.page) {
+            if (this.page == null) {
                 this.hasMore = false;
+                this.page = 0;
             }
             return data.message.posts;
         } catch (error) {
