@@ -159,6 +159,18 @@ class FeedManager {
 
 const feedManager = new FeedManager();
 
+function likePost(id) {
+    const button = document.querySelector(`.action-button[data-id="${id}"]`);
+    const icon = button.querySelector('i');
+    
+    if (icon.classList.contains('fa-heart')) {
+        icon.classList.toggle('fas');
+        icon.classList.toggle('far');
+        const countElement = button.querySelector('span');
+        let count = parseInt(countElement.textContent);
+        countElement.textContent = icon.classList.contains('fas') ? count + 1 : count - 1;
+    }
+}
 document.addEventListener('click', (e) => {
     if (e.target.closest('.action-button')) {
         const button = e.target.closest('.action-button');
