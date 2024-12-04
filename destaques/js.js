@@ -45,6 +45,7 @@ class FeedManager {
             }
             const data = await response.json();
             this.page = data.message.exclusiveStartKey;
+            console.log('Next page:', this.page);
             if (!this.page) {
                 this.hasMore = false;
             }
