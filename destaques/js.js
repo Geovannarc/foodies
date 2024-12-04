@@ -96,24 +96,31 @@ class FeedManager {
         const postsHTML = posts.map(post => `
             <div class="post-card">
                 <div class="post-header">
-                    <div class="user-avatar" style="background-image: url(https://profile-pic-foodies.s3.us-east-2.amazonaws.com/${post.username}.jpg);">
-                    </div>
+                    <a href="../perfil/usuario?username=${post.username}" class="user-avatar" 
+                       style="background-image: url(https://profile-pic-foodies.s3.us-east-2.amazonaws.com/${post.username}.jpg);">
+                    </a>
                     <div class="user-info">
-                        <h2 class="user-name">${post.username}</h2>
+                        <a href="../perfil/usuario?username=${post.username}" class="user-name">
+                            <h2>${post.username}</h2>
+                        </a>
                         <span class="post-time">${this.formatRelativeTime(post.dateCreation)}</span>
                     </div>
                 </div>
-                <img src=${post.mediaFile} alt="Post" class="post-image">
+                <img src="${post.mediaFile}" alt="Post" class="post-image">
                 <div class="post-content">
                     <div class="rating">
                         <div class="stars">${this.renderStars(parseFloat(post.rating))}</div>
                         <span>${post.rating}</span>
                     </div>
-                    <div class="restaurant-name">${post.restaurantName}</div>
-                    <p class="post-description"><span style="font-weight:600">@${post.username}<span> ${post.caption}</p>
+                    <a href="../perfil/estabelecimento?id=${post.restaurantId}" class="restaurant-name">
+                        ${post.restaurantName}
+                    </a>
+                    <p class="post-description">
+                        <span style="font-weight:600">@${post.username}</span> ${post.caption}
+                    </p>
                 </div>
                 <div class="post-actions">
-                    <button class="action-button">
+                    <button class="action-button" onclick="likePost('${post.id}')">
                         <i class="far fa-heart"></i>
                         <span>${post.likes}</span>
                     </button>
