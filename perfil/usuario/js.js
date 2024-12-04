@@ -33,7 +33,7 @@ async function followUser() {
             throw new Error(`Erro ao seguir usuário: ${response.statusText}`);
         }
         document.getElementById('follow-button').style.display = 'none';
-        document.getElementById('unfollow-button').style.display = 'inline;';
+        document.getElementById('unfollow-button').style.display = 'inline';
     } catch (error) {
         console.error("Erro ao seguir usuário:", error);
         return null;
@@ -51,7 +51,7 @@ async function unfollowUser() {
         if (!response.ok) {
             throw new Error(`Erro ao deixar de seguir usuário: ${response.statusText}`);
         }
-        document.getElementById('follow-button').style.display = 'inline;';
+        document.getElementById('follow-button').style.display = 'inline';
         document.getElementById('unfollow-button').style.display = 'none';
     } catch (error) {
         console.error("Erro ao deixar de seguir usuário:", error);
