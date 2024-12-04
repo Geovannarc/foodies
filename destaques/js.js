@@ -159,29 +159,44 @@ class FeedManager {
 
 const feedManager = new FeedManager();
 
-function likePost(id) {
+async function likePost(id) {
     const button = document.querySelector(`.action-button[data-id="${id}"]`);
     const icon = button.querySelector('i');
-    
-    if (icon.classList.contains('fa-heart')) {
-        icon.classList.toggle('fas');
-        icon.classList.toggle('far');
-        const countElement = button.querySelector('span');
-        let count = parseInt(countElement.textContent);
-        countElement.textContent = icon.classList.contains('fas') ? count + 1 : count - 1;
-    }
-}
-document.addEventListener('click', (e) => {
-    if (e.target.closest('.action-button')) {
-        const button = e.target.closest('.action-button');
-        const icon = button.querySelector('i');
-        
-        if (icon.classList.contains('fa-heart')) {
-            icon.classList.toggle('fas');
-            icon.classList.toggle('far');
-            const countElement = button.querySelector('span');
-            let count = parseInt(countElement.textContent);
-            countElement.textContent = icon.classList.contains('fas') ? count + 1 : count - 1;
+    if(icon.classList.contains('far')) {
+        try {
+            const exclusiveStartKey = this.page ? encodeURIComponent(JSON.stringify(this.page)) : null;
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/like?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&postId=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${localStorage.getItem('jwtToken')}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.statusText}`);
+            }
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+        } catch (error) {
+            console.error("Erro ao buscar posts:", error);
+            return []; 
+        }
+    } else {
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/unlike?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&postId=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${localStorage.getItem('jwtToken')}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.statusText}`);
+            }
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+        } catch (error) {
+            console.error("Erro ao buscar posts:", error);
+            return []; 
         }
     }
-});
+
+}
