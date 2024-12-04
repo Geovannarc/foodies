@@ -176,6 +176,7 @@ async function likePost(id) {
             }
             icon.classList.remove('far');
             icon.classList.add('fas');
+
         } catch (error) {
             console.error("Erro ao buscar posts:", error);
             return []; 
@@ -198,5 +199,7 @@ async function likePost(id) {
             return []; 
         }
     }
-
+    const countElement = button.querySelector('span');
+    let count = parseInt(countElement.textContent);
+    countElement.textContent = icon.classList.contains('fas') ? count + 1 : count - 1;
 }
