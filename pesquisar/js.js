@@ -15,13 +15,13 @@ const content = `<div class="row">
             </div>
             <div class="row">
                 <div class="col-6 filter">
-                    <button class="btn btn-primary pd-3 category-filter" id="3">
+                    <button class="btn btn-primary pd-3 category-filter" id="18">
                         <i class="fas fa-2x fa-beer"></i>
                         <p class="mt-1 mb-0">Bares</p>
                     </button>
                 </div>
                 <div class="col-6 filter">
-                    <button class="btn btn-primary pd-3 category-filter" id="4">
+                    <button class="btn btn-primary pd-3 category-filter" id="20">
                         <i class="far fa-2x fa-heart"></i>
                         <p class="mt-1 mb-0">Ótimo para encontros</p>
                     </button>
@@ -29,13 +29,13 @@ const content = `<div class="row">
             </div>
             <div class="row">
                 <div class="col-6 filter">
-                    <button class="btn btn-primary pd-3 category-filter" id="5">
+                    <button class="btn btn-primary pd-3 category-filter" id="19">
                         <i class="fas fa-2x fa-seedling"></i>
                         <p class="mt-1 mb-0">Vegetariano</p>
                     </button>
                 </div>
                 <div class="col-6 filter">
-                    <button class="btn btn-primary pd-3 category-filter" id="6">
+                    <button class="btn btn-primary pd-3 category-filter" id="21">
                         <i class="fas fa-2x fa-ice-cream"></i>
                         <p class="mt-1 mb-0">Doces</p>
                     </button>
