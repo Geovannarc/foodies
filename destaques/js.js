@@ -120,7 +120,7 @@ class FeedManager {
                     </p>
                 </div>
                 <div class="post-actions">
-                    <button class="action-button" data-id=${post.id} onclick="likePost('${post.id}')">
+                    <button class="action-button" data-id=${post.postId} onclick="likePost('${post.postId}')">
                         <i class="far fa-heart"></i>
                         <span>${post.likes}</span>
                     </button>
