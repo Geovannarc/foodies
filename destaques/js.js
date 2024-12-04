@@ -34,7 +34,7 @@ class FeedManager {
 
     async fetchPosts() {
         try {
-            const exclusiveStartKey = this.page ? encodeURIComponent(JSON.stringify(this.page)) : '';
+            const exclusiveStartKey = this.page ? encodeURIComponent(JSON.stringify(this.page)) : null;
             const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/get?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&exclusiveStartKey=${exclusiveStartKey}`, {
                 method: 'GET',
                  headers: {
