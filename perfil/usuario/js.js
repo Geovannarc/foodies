@@ -23,7 +23,7 @@ async function fetchUserPosts(username) {
 async function followUser() {
     try {
 
-        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/follow?username=${localStorage.getItem('username')}$following=${localStorage.getItem('dXNlcklk')}&follower=${id}`, {
+        const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/follow?username=${localStorage.getItem('username')}&following=${localStorage.getItem('dXNlcklk')}&follower=${id}`, {
             method: 'POST',
             headers: {
                 'Authorization': `${localStorage.getItem('jwtToken')}`
