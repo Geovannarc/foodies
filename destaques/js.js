@@ -121,7 +121,7 @@ class FeedManager {
                 </div>
                 <div class="post-actions">
                     <button class="action-button" data-id=${post.postId} onclick="likePost('${post.postId}')">
-                        <i class="far fa-heart"></i>
+                        <i class="${post.liked ? 'fas fa-heart' : 'far fa-heart'}"></i>
                         <span>${post.likes}</span>
                     </button>
                 </div>
