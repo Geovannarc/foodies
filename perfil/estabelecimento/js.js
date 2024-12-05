@@ -65,7 +65,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('address').href = `https://www.google.com/maps/place/${encodeURIComponent(data.message.address)}`;
             renderRating("star-rating", data.message.rating);
             renderNumberOfRatings("reviews", data.message.number_rating);
-            //document.getElementById('reviews').textContent = data.message.number_rating;
+            try {
+                const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/post/getByRestaurantId?restaurantId=${encodeURIComponent(id)}`, {
+                    method: 'GET',
+                });
+                if (!response.ok) {
+                     throw new Error(`Erro ao buscar posts: ${response.statusText}`);
+                }
+                const data = await response.json();
+                renderPosts(data.message);
+            } catch (error) {
+                console.error("Erro ao buscar posts:", error);
+                return []; 
+            }
         } catch (error) {
             console.error('Erro ao buscar dados:', error);
         }
@@ -73,6 +85,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('ID não fornecido na URL');
     }
 });
+
+function renderPosts(posts) {
+    const feedContainer = document.getElementById('content'); 
+    feedContainer.innerHTML = '';
+    for (let i = 0; i < posts.length; i += 4) {
+        const row = document.createElement('div');
+        row.className = 'row';
+
+        posts.slice(i, i + 4).forEach((post, idx) => {
+            const col = document.createElement('div');
+            col.className = 'col-3 fill';
+            const img = document.createElement('img');
+            img.className = 'w-100';
+            img.style.cursor = 'pointer';
+            img.src = post.mediaFile;
+            img.addEventListener('click', () => openModal(i + idx)); 
+            col.appendChild(img);
+            row.appendChild(col);
+        });
+
+        feedContainer.appendChild(row);
+    }
+}
+function openModal(index) {
+    currentIndex = index;
+    updateModalContent();
+    document.getElementById('post-modal').style.display = 'flex';
+}
+
+const closeModalButton = document.getElementById('close-modal');
+closeModalButton.addEventListener('click', () => {
+    const modal = document.getElementById('post-modal');
+    modal.style.display = 'none';
+});
+
+function updateModalContent() {
+    const post = posts[currentIndex];
+    document.getElementById('modal-image').src = post.mediaFile;
+    document.getElementById('modal-caption').innerHTML =`<span style="font-weight:600">${post.username}</span> ${post.caption || 'Sem legenda'}`;
+    document.getElementById('modal-rating').innerHTML = renderStars(post.rating);
+    document.getElementById('modal-restaurant').textContent = post.restaurantName;
+    document.getElementById('modal-likes').innerHTML = `<i class="far fa-heart"></i><span> ${post.likes}</span>`;
+}
 
 function back() {
     window.history.back();
