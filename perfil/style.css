@@ -204,3 +204,19 @@
     margin-bottom: 0.5em;
     font-weight: 600;
 }
+
+.action-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #666;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    color: #333;
+}
