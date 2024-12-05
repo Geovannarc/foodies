@@ -127,7 +127,7 @@ renderResults() {
                                 <i class="fa fa-store" style="color: #40D9A1"></i>
                                 <div class="user-info">
                                     <div class="user-name">${restaurant.name}</div>
-                                    <div class="user-stats">${restaurant.numberRating} avaliações • ${restaurant.rating} ★</div>
+                                    <div class="user-stats">${restaurant.number_rating} avaliações • ${restaurant.rating} ★</div>
                                 </div>
                             </div>
                         `).join('')}
