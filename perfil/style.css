@@ -146,3 +146,61 @@
     color: #333;
     margin-bottom: 5px;
 }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+  
+.modal-content {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.modal-dialog {
+    justify-content: center;
+}
+
+.modal-header {
+    justify-content: right;
+    padding: 0;
+}
+
+.modal-body {
+    text-align: left;
+}
+
+#modal-rating {
+    margin-top: 1em;
+    color: #40D9A1;
+}
+
+.restaurant-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.post-description {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    margin-bottom: 0.5em;
+}
+
+.header-stats {
+    margin-bottom: 0.5em;
+    font-weight: 600;
+}
