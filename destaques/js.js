@@ -97,7 +97,7 @@ class FeedManager {
             <div class="post-card">
                 <div class="post-header">
                     <a href="../perfil/usuario?username=${post.username}" class="user-avatar" 
-                       style="background-image: url(https://profile-pic-foodies.s3.us-east-2.amazonaws.com/${post.username}.jpg);">
+                       style="background-image: url(https://profile-pic-foodies.s3.us-east-2.amazonaws.com/${post.username}.jpg);background-repeat: unset;">
                     </a>
                     <div class="user-info">
                         <a href="../perfil/usuario?username=${post.username}" class="user-name">
