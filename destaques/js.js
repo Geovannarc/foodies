@@ -164,7 +164,6 @@ async function likePost(id) {
     const icon = button.querySelector('i');
     if(icon.classList.contains('far')) {
         try {
-            const exclusiveStartKey = this.page ? encodeURIComponent(JSON.stringify(this.page)) : null;
             const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/like?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&postId=${id}`, {
                 method: 'POST',
                 headers: {

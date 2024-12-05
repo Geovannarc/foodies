@@ -71,3 +71,47 @@ function getContentLists() {
         console.error('Erro ao buscar ou processar as tags:', error);
     }
 }
+
+async function likePost(id) {
+    const button = document.querySelector(`.action-button[data-id="${id}"]`);
+    const icon = button.querySelector('i');
+    if(icon.classList.contains('far')) {
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/like?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&postId=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${localStorage.getItem('jwtToken')}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.statusText}`);
+            }
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+
+        } catch (error) {
+            console.error("Erro ao buscar posts:", error);
+            return []; 
+        }
+    } else {
+        try {
+            const response = await fetch(`https://cd0xq19jl6.execute-api.us-east-2.amazonaws.com/unlike?username=${encodeURIComponent(localStorage.getItem('username'))}&dXNlcklk=${encodeURIComponent(localStorage.getItem('dXNlcklk'))}&postId=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${localStorage.getItem('jwtToken')}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.statusText}`);
+            }
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+        } catch (error) {
+            console.error("Erro ao buscar posts:", error);
+            return []; 
+        }
+    }
+    const countElement = button.querySelector('span');
+    let count = parseInt(countElement.textContent);
+    countElement.textContent = icon.classList.contains('fas') ? count + 1 : count - 1;
+}

@@ -130,7 +130,10 @@ function updateModalContent() {
     document.getElementById('modal-caption').innerHTML =`<span style="font-weight:600">${post.username}</span> ${post.caption || 'Sem legenda'}`;
     document.getElementById('modal-rating').innerHTML = renderStars(post.rating);
     document.getElementById('modal-restaurant').textContent = post.restaurantName;
-    document.getElementById('modal-likes').innerHTML = `<i class="far fa-heart"></i><span> ${post.likes}</span>`;
+    document.getElementById('modal-likes').innerHTML = `<button class="action-button" data-id=${post.postId} onclick="likePost('${post.postId}')">
+                        <i class="far fa-heart"></i>
+                        <span>${post.likes}</span>
+                    </button>`;
 }
 
 function renderStars(rating) {
