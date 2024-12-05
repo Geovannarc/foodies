@@ -147,7 +147,7 @@ function updateModalContent() {
     document.getElementById('modal-image').src = post.mediaFile;
     document.getElementById('modal-caption').innerHTML =`<span style="font-weight:600">${post.username}</span> ${post.caption || 'Sem legenda'}`;
     document.getElementById('modal-rating').innerHTML = renderStars(post.rating);
-    document.getElementById('modal-restaurant').textContent = post.restaurantName;
+    document.getElementById('modal-restaurant').innerHTML = `<a href="../estabelecimento?id=${post.restaurantId}" class="restaurant-link">${post.restaurantName}</a>`;
     document.getElementById('modal-likes').innerHTML = `<i class="far fa-heart"></i><span> ${post.likes}</span>`;
 }
 
