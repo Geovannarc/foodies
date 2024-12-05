@@ -1,3 +1,6 @@
+let currentIndex = 0;
+let posts = [];
+
 function renderRating(containerId, rating) {
     const container = document.getElementById(containerId);
     container.innerHTML = ""; 
@@ -73,7 +76,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                      throw new Error(`Erro ao buscar posts: ${response.statusText}`);
                 }
                 const data = await response.json();
-                renderPosts(data.message);
+                posts = data.message;
+                renderPosts(posts);
             } catch (error) {
                 console.error("Erro ao buscar posts:", error);
                 return []; 
