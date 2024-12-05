@@ -14,6 +14,7 @@
 .nome {
     font-size: 2em;
     font-weight: 500;
+    margin-bottom: 0;
 }
 
 .endereco {
@@ -25,7 +26,6 @@
     display: flex;
     margin-bottom: 0.5em;
     gap: 5px;
-    padding: 16px 0 0;
     justify-content: center;
 }
 
