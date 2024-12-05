@@ -133,6 +133,17 @@ function updateModalContent() {
     document.getElementById('modal-likes').innerHTML = `<i class="far fa-heart"></i><span> ${post.likes}</span>`;
 }
 
+function renderStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    return `
+        ${`<i class="fas fa-star"></i>`.repeat(fullStars)}
+        ${hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : ''}
+        ${`<i class="far fa-star"></i>`.repeat(emptyStars)}
+    `;
+}
 function back() {
     window.history.back();
 }
